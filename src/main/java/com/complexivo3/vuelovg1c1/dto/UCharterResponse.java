@@ -7,4 +7,5 @@ public class UCharterResponse {
     private long id;
     private String ruc;
     private String empresa;
+    private UserResponse usuario;
 }

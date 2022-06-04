@@ -41,31 +41,28 @@ public class AuthService {
                 return UsuarioMapper.userToResponse(usuarioOptional.get());
             throw new BadRequestException("Contraseña incorrecta para email: " + request.getCorreo());
         }
-
         throw new AccountNotFoundException("Cuenta no encontrada con email: " + request.getCorreo());
     }
 
     @Transactional
-    public Pasajero signupPasajero(PasajeroRequest request) {
+    public PasajeroResponse signupPasajero(PasajeroRequest request) {
         existsEmail(request.getUsuario().getCorreo());
         Pasajero pasajero = PasajeroMapper.toPasajero(request);
-        return pasajeroRepository.save(pasajero);
+        return PasajeroMapper.toResponse(pasajeroRepository.save(pasajero));
     }
 
     @Transactional
-    public Empleado signupEmpleado(EmpleadoRequest request) {
+    public EmpleadoResponse signupEmpleado(EmpleadoRequest request) {
         existsEmail(request.getUsuario().getCorreo());
-
         Empleado empleado = EmpleadoMapper.toEmpleado(request);
-        return empleadoRepository.save(empleado);
+        return EmpleadoMapper.toResponse(empleadoRepository.save(empleado));
     }
 
     @Transactional
-    public UsuarioCharter signupCharter(CharterRequest request) {
+    public UCharterResponse signupCharter(CharterRequest request) {
         existsEmail(request.getUsuario().getCorreo());
-
         UsuarioCharter charter = UCharterMapper.toUCharter(request);
-        return charterRepository.save(charter);
+        return UCharterMapper.toResponse(charterRepository.save(charter));
     }
 
     private void existsEmail(String email) {
