@@ -32,6 +32,12 @@
                 <activatedProperties>eduardo</activatedProperties>
             </properties>
         </profile>
+        <profile>
+            <id>eduardo</id>
+            <properties>
+                <activatedProperties>eduardo</activatedProperties>
+            </properties>
+        </profile>
     </profiles>
     <dependencies>
         <dependency>
