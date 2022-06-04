@@ -29,16 +29,14 @@ public class Usuario {
      private Long id;
      private String correo;
      private String password;
+     private String rol; // pasajero, charter, empleado.
 
-
-     @OneToOne(mappedBy = "usuario", orphanRemoval = true)
+     /*@OneToOne(mappedBy = "usuario", orphanRemoval = true)
      private Empleado empleado;
 
+     @OneToOne(mappedBy = "usuario", orphanRemoval = true)
+     private UsuarioCharter usuarioCharter;
 
      @OneToOne(mappedBy = "usuario", orphanRemoval = true)
-     private UsuarioCharter usuarioCharter; 
-
-
-     @OneToOne(mappedBy = "usuario", orphanRemoval = true)
-     private Pasajero pasajero;
+     private Pasajero pasajero;*/
 }

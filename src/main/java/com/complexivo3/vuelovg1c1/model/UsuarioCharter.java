@@ -26,9 +26,13 @@ public class UsuarioCharter {
     private String empresa;
 
 
-    @OneToOne
+  /*  @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
+    )
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    private Usuario usuario;*/
 
     @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
     private Manifiesto manifiesto;

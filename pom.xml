@@ -33,9 +33,9 @@
             </properties>
         </profile>
         <profile>
-            <id>eduardo</id>
+            <id>carlos</id>
             <properties>
-                <activatedProperties>eduardo</activatedProperties>
+                <activatedProperties>carlos</activatedProperties>
             </properties>
         </profile>
     </profiles>
@@ -70,6 +70,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -85,6 +98,11 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
         </plugins>
     </build>
