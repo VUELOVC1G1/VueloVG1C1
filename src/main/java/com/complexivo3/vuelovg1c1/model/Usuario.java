@@ -28,7 +28,4 @@ public class Usuario {
      private String password;
      private String rol; // pasajero, charter, empleado.}
 
-    @Temporal(TemporalType.TIME)
-    private Date date;
-
 }
