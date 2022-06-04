@@ -2,8 +2,6 @@ package com.complexivo3.vuelovg1c1.model;
 
 import javax.persistence.*;
 
-import com.complexivo3.vuelovg1c1.auth.model.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,13 +24,13 @@ public class UsuarioCharter {
     private String empresa;
 
 
-  /*  @OneToOne(
+   @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;*/
+    private Usuario usuario;
 
     @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
     private Manifiesto manifiesto;

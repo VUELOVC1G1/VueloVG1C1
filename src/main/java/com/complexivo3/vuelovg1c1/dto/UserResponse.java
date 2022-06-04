@@ -1,4 +1,4 @@
-package com.complexivo3.vuelovg1c1.auth.dto;
+package com.complexivo3.vuelovg1c1.dto;
 
 import lombok.Data;
 
@@ -8,7 +8,6 @@ public class UserResponse {
     private long id;
     private String email;
     private String password;
-    private String rol; // TODO:
-    private String token;
-
+    private String rol;
+    // TODO: token
 }

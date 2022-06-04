@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import com.complexivo3.vuelovg1c1.auth.model.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

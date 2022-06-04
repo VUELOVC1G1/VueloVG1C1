@@ -1,0 +1,15 @@
+package com.complexivo3.vuelovg1c1.mapper;
+
+import com.complexivo3.vuelovg1c1.dto.CharterRequest;
+import com.complexivo3.vuelovg1c1.model.UsuarioCharter;
+
+public class UCharterMapper {
+
+    public static UsuarioCharter toUCharter(CharterRequest request) {
+        UsuarioCharter charter = new UsuarioCharter();
+        charter.setEmpresa(request.getEmpresa());
+        charter.setRuc(request.getRuc());
+        charter.setUsuario(UsuarioMapper.requestToUser(request.getUsuario()));
+        return charter;
+    }
+}
