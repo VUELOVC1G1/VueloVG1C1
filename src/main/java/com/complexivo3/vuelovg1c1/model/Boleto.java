@@ -29,4 +29,8 @@ public class Boleto {
 
     @OneToMany(mappedBy = "boleto" , orphanRemoval = true)
     private List<Maleta> maletas;
+
+    @ManyToMany(mappedBy = "boletos")
+    private List<Asiento> asientos;
+
 }

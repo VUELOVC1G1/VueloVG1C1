@@ -29,4 +29,12 @@ public class Avion {
     @OneToMany(mappedBy = "avion",orphanRemoval = true)
     private List<Asiento> asientos;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "vuelo_avion",
+            joinColumns = @JoinColumn(name = "id_vuelo", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_avion", referencedColumnName = "id")
+    )
+    private List<Vuelo> vuelos;
+
 }

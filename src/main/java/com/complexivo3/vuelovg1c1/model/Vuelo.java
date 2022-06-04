@@ -44,10 +44,17 @@ public class Vuelo {
     private Ruta ruta;
 
     @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private UsuarioCharter usuarioCharter;
+
+    @ManyToOne
     @JoinColumn(name = "id_tipo")
     private TipoVuelo tipo;
 
     @OneToMany(mappedBy = "vuelo")
     private List<Promocion> promociones;
+
+    @ManyToMany
+    private List<Avion> aviones;
 
 }

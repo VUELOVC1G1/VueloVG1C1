@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name="asientos")
+@Table(name = "asientos")
 public class Asiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +29,12 @@ public class Asiento {
     @ManyToOne
     @JoinColumn(name = "id_avion")
     private Avion avion;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "boleto_asiento",
+            joinColumns = @JoinColumn(name = "id_boleto", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_asiento", referencedColumnName = "id")
+    )
+    private List<Boleto> boletos;
 }
