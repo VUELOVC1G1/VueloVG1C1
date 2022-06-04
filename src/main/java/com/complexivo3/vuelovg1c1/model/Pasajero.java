@@ -23,22 +23,19 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "empleados")
-public class Empleado{
+@Table(name = "pasajeros")
+public class Pasajero {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String cedula;
 
     @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
 
-    private boolean estado;
     private String nombre;
     private String apellido;
-
 
     @OneToOne
     @JoinColumn(name = "id_usuario")

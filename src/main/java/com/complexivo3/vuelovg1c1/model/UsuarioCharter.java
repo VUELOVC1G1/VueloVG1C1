@@ -1,8 +1,5 @@
 package com.complexivo3.vuelovg1c1.model;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,24 +20,23 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "empleados")
-public class Empleado{
+@Table(name = "usuarios_charter")
+public class UsuarioCharter {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String cedula;
-
-    @Column(name = "fecha_nacimiento")
-    private Date fechaNacimiento;
-
-    private boolean estado;
-    private String nombre;
-    private String apellido;
+    private String ruc;
+    private String empresa;
 
 
     @OneToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
+    private Manifiesto manifiesto;
+
+    @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
+    private Pedido pedido;
 }

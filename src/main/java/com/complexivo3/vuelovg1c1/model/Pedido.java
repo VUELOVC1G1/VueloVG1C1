@@ -2,7 +2,6 @@ package com.complexivo3.vuelovg1c1.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.complexivo3.vuelovg1c1.auth.model.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,24 +21,19 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "empleados")
-public class Empleado{
+@Table(name = "usuarios")
+public class Pedido {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String cedula;
-
-    @Column(name = "fecha_nacimiento")
-    private Date fechaNacimiento;
-
     private boolean estado;
-    private String nombre;
-    private String apellido;
+    private String ruta;
+    private Date fecha;
 
 
     @OneToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @JoinColumn(name = "id_cliente_charter")
+    private UsuarioCharter usuarioCharter;
 }
