@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class EmailExistsException extends RuntimeException {
 
-    public EmailExistsException(String message) {
-        super(message);
+    public EmailExistsException(String correo) {
+        super("Ya existe una cuenta con este correo: " + correo);
     }
 }

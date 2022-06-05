@@ -41,7 +41,7 @@ public class AuthService {
                 return UsuarioMapper.userToResponse(usuarioOptional.get());
             throw new BadRequestException("Contraseña incorrecta para email: " + request.getCorreo());
         }
-        throw new AccountNotFoundException("Cuenta no encontrada con email: " + request.getCorreo());
+        throw new AccountNotFoundException(request.getCorreo());
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class AuthService {
 
     private void existsEmail(String email) {
         if (usuarioRepository.existsByCorreo(email)) {
-            throw new EmailExistsException("Correo: " + email + ", ya se encuentra registrado");
+            throw new EmailExistsException(email);
         }
     }
 
