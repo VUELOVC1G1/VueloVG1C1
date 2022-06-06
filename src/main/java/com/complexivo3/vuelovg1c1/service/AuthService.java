@@ -33,7 +33,7 @@ public class AuthService implements IAuthService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserResponse doLogin(LoginRequest request) {
+    public UserDto doLogin(LoginRequest request) {
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(request.getCorreo());
 

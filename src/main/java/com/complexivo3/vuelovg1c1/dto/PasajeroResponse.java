@@ -11,5 +11,5 @@ public class PasajeroResponse {
     private String nombre;
     private String apellido;
     private Date fechaNacimiento;
-    private UserResponse usuario;
+    private UserDto usuario;
 }

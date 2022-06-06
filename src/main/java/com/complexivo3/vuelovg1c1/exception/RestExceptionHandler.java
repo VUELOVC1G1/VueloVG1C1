@@ -17,6 +17,15 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(value = {NotFoundException.class})
+    public ResponseEntity<ExceptionResponse> handleNotFoundException(NotFoundException exception) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setMessage(exception.getMessage());
+        response.setStatus(404);
+        response.setError(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
     @ExceptionHandler(value = {BadRequestException.class})
     public ResponseEntity<ExceptionResponse> handleBadRequestException(BadRequestException exception) {
         ExceptionResponse response = new ExceptionResponse();

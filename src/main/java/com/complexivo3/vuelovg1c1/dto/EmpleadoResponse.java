@@ -12,5 +12,5 @@ public class EmpleadoResponse {
     private String apellido;
     private Date fechaNacimiento;
     private boolean estado;
-    private UserResponse usuario;
+    private UserDto usuario;
 }
