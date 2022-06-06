@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/empleados")
 public class EmpleadosController {
 
-    private IEmpleadoService empleadoService;
+    private final IEmpleadoService empleadoService;
 
     @GetMapping("/usuario/{id}")
     public ResponseEntity<EmpleadoResponse> findById(@PathVariable Long id) {

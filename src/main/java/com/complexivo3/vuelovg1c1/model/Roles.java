@@ -1,7 +1,7 @@
 package com.complexivo3.vuelovg1c1.model;
 
 public class Roles {
-    public static String EMPLEADO = "Empleado";
-    public static String PASAJERO = "Pasajero";
-    public static String CHARTER = "Charter";
+    public static final String EMPLEADO = "EMPLEADO";
+    public static final String PASAJERO = "PASAJERO";
+    public static final String CHARTER = "CHARTER";
 }
