@@ -70,9 +70,8 @@ public class AuthService implements IAuthService {
     }
 
     private void existsEmail(String email) {
-        if (usuarioRepository.existsByCorreo(email)) {
+        if (usuarioRepository.existsByCorreo(email))
             throw new EmailExistsException(email);
-        }
     }
 
 }

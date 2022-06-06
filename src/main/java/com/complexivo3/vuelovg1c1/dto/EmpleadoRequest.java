@@ -12,4 +12,5 @@ public class EmpleadoRequest {
     private Date fechaNacimiento;
     private boolean estado;
     private UsuarioRequest usuario;
+    private CargoDto cargo;
 }
