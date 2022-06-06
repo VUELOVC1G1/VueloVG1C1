@@ -1,5 +1,7 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.EmpleadoCargoRequest;
+import com.complexivo3.vuelovg1c1.dto.EmpleadoCargosResponse;
 import com.complexivo3.vuelovg1c1.dto.EmpleadoResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.EmpleadoMapper;
@@ -28,5 +30,12 @@ public class EmpleadosService implements IEmpleadoService {
                 .orElseThrow(() -> new NotFoundException("No existe un empleado con usuario id: " + id));
 
         return EmpleadoMapper.toResponse(e);
+    }
+
+    @Override
+    public EmpleadoCargosResponse updateCargo(EmpleadoCargoRequest request) {
+        Empleado e = EmpleadoMapper.toEmpleado(request);
+        Empleado saved = empleadoRepository.save(e);
+        return EmpleadoMapper.toResponseCargo(saved);
     }
 }

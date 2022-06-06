@@ -1,6 +1,7 @@
 package com.complexivo3.vuelovg1c1.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -15,8 +16,8 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "empleados")
-public class Empleado{
-    
+public class Empleado {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,4 +39,13 @@ public class Empleado{
     )
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @ManyToMany
+    @JoinTable(
+            name = "empleado_cargo",
+            joinColumns = @JoinColumn(name = "empleado_id"),
+            inverseJoinColumns = @JoinColumn(name = "cargo_id")
+    )
+    private List<Cargo> cargos = new java.util.ArrayList<>();
+
 }
