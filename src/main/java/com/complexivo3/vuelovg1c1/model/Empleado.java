@@ -24,6 +24,7 @@ public class Empleado{
     private String cedula;
 
     @Column(name = "fecha_nacimiento")
+    @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
     private boolean estado;

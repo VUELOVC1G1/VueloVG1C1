@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class PasajeroRequest {
-    private Long id;
     private String cedula;
     private Date fechaNacimiento;
     private String nombre;

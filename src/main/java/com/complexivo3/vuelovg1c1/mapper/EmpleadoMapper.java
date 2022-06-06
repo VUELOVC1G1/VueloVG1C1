@@ -3,6 +3,7 @@ package com.complexivo3.vuelovg1c1.mapper;
 import com.complexivo3.vuelovg1c1.dto.EmpleadoRequest;
 import com.complexivo3.vuelovg1c1.dto.EmpleadoResponse;
 import com.complexivo3.vuelovg1c1.model.Empleado;
+import com.complexivo3.vuelovg1c1.model.Roles;
 
 public class EmpleadoMapper {
     public static Empleado toEmpleado(EmpleadoRequest request) {
@@ -13,6 +14,7 @@ public class EmpleadoMapper {
         e.setFechaNacimiento(request.getFechaNacimiento());
         e.setEstado(request.isEstado());
         e.setUsuario(UsuarioMapper.requestToUser(request.getUsuario()));
+        e.getUsuario().setRol(Roles.EMPLEADO);
         return e;
     }
 

@@ -2,11 +2,7 @@ package com.complexivo3.vuelovg1c1.controller;
 
 
 import com.complexivo3.vuelovg1c1.dto.*;
-import com.complexivo3.vuelovg1c1.repository.IEmpleadoRepository;
-import com.complexivo3.vuelovg1c1.repository.IPasajeroRepository;
-import com.complexivo3.vuelovg1c1.repository.IUCharterRepository;
-import com.complexivo3.vuelovg1c1.service.AuthService;
-import com.complexivo3.vuelovg1c1.model.Pasajero;
+import com.complexivo3.vuelovg1c1.service.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final AuthService service;
+    private final IAuthService service;
 
     @PostMapping("/login")
     public ResponseEntity<?> doLogin(@RequestBody LoginRequest request) {

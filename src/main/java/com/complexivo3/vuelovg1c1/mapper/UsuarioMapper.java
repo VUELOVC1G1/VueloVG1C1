@@ -18,7 +18,6 @@ public class UsuarioMapper {
         Usuario usuario = new Usuario();
         usuario.setCorreo(request.getCorreo());
         usuario.setPassword(request.getPassword());
-        usuario.setRol(request.getRol());
         return usuario;
     }
 

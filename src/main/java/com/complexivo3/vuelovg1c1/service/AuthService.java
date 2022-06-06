@@ -24,14 +24,15 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements IAuthService {
 
     private final IUsuarioRepository usuarioRepository;
     private final IEmpleadoRepository empleadoRepository;
     private final IUCharterRepository charterRepository;
     private final IPasajeroRepository pasajeroRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
+    @Override
     public UserResponse doLogin(LoginRequest request) {
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(request.getCorreo());
@@ -45,6 +46,7 @@ public class AuthService {
     }
 
     @Transactional
+    @Override
     public PasajeroResponse signupPasajero(PasajeroRequest request) {
         existsEmail(request.getUsuario().getCorreo());
         Pasajero pasajero = PasajeroMapper.toPasajero(request);
@@ -52,6 +54,7 @@ public class AuthService {
     }
 
     @Transactional
+    @Override
     public EmpleadoResponse signupEmpleado(EmpleadoRequest request) {
         existsEmail(request.getUsuario().getCorreo());
         Empleado empleado = EmpleadoMapper.toEmpleado(request);
@@ -59,6 +62,7 @@ public class AuthService {
     }
 
     @Transactional
+    @Override
     public UCharterResponse signupCharter(CharterRequest request) {
         existsEmail(request.getUsuario().getCorreo());
         UsuarioCharter charter = UCharterMapper.toUCharter(request);
