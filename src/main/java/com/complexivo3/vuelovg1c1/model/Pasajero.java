@@ -1,6 +1,7 @@
 package com.complexivo3.vuelovg1c1.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -36,4 +37,8 @@ public class Pasajero {
     )
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "pasajero", orphanRemoval = true)
+    private List<Boleto> boletoes = new java.util.ArrayList<>();
+
 }

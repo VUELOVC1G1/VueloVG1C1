@@ -33,4 +33,8 @@ public class Boleto {
     @ManyToMany(mappedBy = "boletos")
     private List<Asiento> asientos;
 
+    @ManyToOne
+    @JoinColumn(name = "pasajero_id")
+    private Pasajero pasajero;
+
 }
