@@ -37,4 +37,8 @@ public class Asiento {
             inverseJoinColumns = @JoinColumn(name = "id_asiento", referencedColumnName = "id")
     )
     private List<Boleto> boletos;
+
+    public Asiento(String nombre) {
+        this.nombre = nombre;
+    }
 }

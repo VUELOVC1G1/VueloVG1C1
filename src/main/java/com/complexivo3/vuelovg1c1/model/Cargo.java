@@ -21,6 +21,7 @@ public class Cargo {
     private Long id;
 
     private String nombre;
+    private String siglas;
 
     @ManyToMany(mappedBy = "cargos")
     private List<Empleado> empleados = new java.util.ArrayList<>();

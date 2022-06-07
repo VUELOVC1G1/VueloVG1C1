@@ -17,13 +17,13 @@ public class CargosController {
 
     private final ICargoService cargoService;
 
-    @PostMapping
-    public ResponseEntity<CargoDto> save(@RequestBody CargoRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cargoService.save(request));
-    }
-
     @GetMapping
     public ResponseEntity<List<CargoDto>> getAll() {
         return ResponseEntity.ok(cargoService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CargoDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(cargoService.findById(id));
     }
 }

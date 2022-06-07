@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name="aviones")
+@Table(name = "aviones")
 public class Avion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,11 @@ public class Avion {
     private String modelo;
     private String marca;
 
-    @OneToMany(mappedBy = "avion",orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "avion",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private List<Asiento> asientos;
 
     @ManyToMany(cascade = CascadeType.ALL)

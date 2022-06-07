@@ -2,6 +2,7 @@ package com.complexivo3.vuelovg1c1.service;
 
 import com.complexivo3.vuelovg1c1.dto.CargoDto;
 import com.complexivo3.vuelovg1c1.dto.CargoRequest;
+import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.CargoMapper;
 import com.complexivo3.vuelovg1c1.model.Cargo;
 import com.complexivo3.vuelovg1c1.repository.ICargoRepository;
@@ -18,18 +19,19 @@ public class CargoService implements ICargoService {
 
     private final ICargoRepository cargoRepository;
 
-    @Transactional
-    @Override
-    public CargoDto save(CargoRequest request) {
-        Cargo c = CargoMapper.toCargo(request);
-        return CargoMapper.toDto(cargoRepository.save(c));
-    }
-
     @Transactional(readOnly = true)
     @Override
     public List<CargoDto> findAll() {
         return cargoRepository.findAll()
                 .stream().map(CargoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public CargoDto findById(Long id) {
+        Cargo cargo = cargoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No existe un cargo con id: " + id));
+        return CargoMapper.toDto(cargo);
     }
 }
