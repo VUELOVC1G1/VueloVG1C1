@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.EmpleadoRequest;
 import com.complexivo3.vuelovg1c1.dto.EmpleadoResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.EmpleadoMapper;
@@ -8,6 +9,10 @@ import com.complexivo3.vuelovg1c1.model.Usuario;
 import com.complexivo3.vuelovg1c1.repository.IEmpleadoRepository;
 import com.complexivo3.vuelovg1c1.repository.IUsuarioRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +33,44 @@ public class EmpleadosService implements IEmpleadoService {
                 .orElseThrow(() -> new NotFoundException("No existe un empleado con usuario id: " + id));
 
         return EmpleadoMapper.toResponse(e);
+    }
+
+    @Override
+    public List<EmpleadoResponse> getAllEmpleados() {
+        List<EmpleadoResponse> empleadosResponse = new ArrayList<>();
+        List<Empleado> empleados = empleadoRepository.findAll();
+        for (Empleado empleado: empleados) {
+            empleadosResponse.add(EmpleadoMapper.toResponse(empleado));
+        }
+        return empleadosResponse;
+    }
+
+
+    @Override
+    public EmpleadoResponse editEmpleado(EmpleadoRequest empleadoRequest, Long idEmpleado) {
+        Empleado empleado = empleadoRepository.findById(idEmpleado)
+        .orElseThrow(() -> new NotFoundException("No existe un Empleado con id: " + idEmpleado));
+        if(empleadoRepository.existsById(idEmpleado)){
+            /*Long idUsuario = empleado.getUsuario().getId();
+            for(Cargo cargo: empleado.getCargos())
+            empleado = EmpleadoMapper.toEmpleado(empleadoRequest);
+            empleado.setId(idEmpleado);
+            empleado.getUsuario().setId(idUsuario);
+            empleado.getCargos().get(0).setId(idCargo);
+            empleadoRepository.save(empleado);*/
+        }
+        return EmpleadoMapper.toResponse(empleado);
+    }
+
+    
+    @Override
+    public EmpleadoResponse deleteEmpleado(Long idEmpleado) {
+        Empleado empleado = empleadoRepository.findById(idEmpleado)
+            .orElseThrow(() -> new NotFoundException("No existe un Empleado con id: " + idEmpleado));
+        if(empleadoRepository.existsById(idEmpleado)){
+            empleadoRepository.deleteById(idEmpleado);
+        }
+        return EmpleadoMapper.toResponse(empleado);
     }
 
 }
