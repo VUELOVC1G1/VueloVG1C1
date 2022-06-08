@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +26,7 @@ public class Cargo {
     private String nombre;
     private String siglas;
 
-    @ManyToMany(mappedBy = "cargos")
-    private List<Empleado> empleados = new java.util.ArrayList<>();
+    @OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Empleado> empleados;
 }
