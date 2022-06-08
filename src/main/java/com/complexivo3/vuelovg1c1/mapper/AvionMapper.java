@@ -30,6 +30,9 @@ public class AvionMapper {
                 avion.getModelo(),
                 avion.getMarca()
         );
+        dto.setAsientos(avion.getAsientos()
+                .stream().map(AsientoMapper::toDto)
+                .collect(Collectors.toList()));
 
         return dto;
     }

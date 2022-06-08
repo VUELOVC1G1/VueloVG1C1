@@ -8,4 +8,5 @@ import lombok.Data;
 public class CargoDto {
     private Long id;
     private String nombre;
+    private String siglas;
 }

@@ -16,10 +16,11 @@ public class CargoMapper {
         Cargo c = new Cargo();
         c.setId(request.getId());
         c.setNombre(request.getNombre());
+        c.setSiglas(request.getSiglas());
         return c;
     }
 
     public static CargoDto toDto(Cargo entity) {
-        return new CargoDto(entity.getId(), entity.getNombre());
+        return new CargoDto(entity.getId(), entity.getNombre(), entity.getSiglas());
     }
 }
