@@ -14,5 +14,5 @@ public class EmpleadoResponse {
     private Date fechaNacimiento;
     private boolean estado;
     private UserDto usuario;
-    private List<CargoDto> cargo;
+    private List<CargoDto> cargos;
 }

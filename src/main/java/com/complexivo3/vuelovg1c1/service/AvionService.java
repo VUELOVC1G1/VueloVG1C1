@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.AsientoDto;
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.AsientoMapper;
@@ -7,6 +8,7 @@ import com.complexivo3.vuelovg1c1.mapper.AvionMapper;
 import com.complexivo3.vuelovg1c1.mapper.TipoAsientoMapper;
 import com.complexivo3.vuelovg1c1.model.Asiento;
 import com.complexivo3.vuelovg1c1.model.Avion;
+import com.complexivo3.vuelovg1c1.repository.IAsientoRepository;
 import com.complexivo3.vuelovg1c1.repository.IAvionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class AvionService {
 
     private final IAvionRepository avionRepository;
+    private final IAsientoRepository asientoRepository;
 
 
     @Transactional(readOnly = true)
@@ -31,20 +34,16 @@ public class AvionService {
     }
 
     @Transactional
-    public AvionDto save(AvionDto request) {
+    public void save(AvionDto request) {
         Avion avion = AvionMapper.toAvion(request);
 
         List<Asiento> asientos = request.getAsientos()
                 .stream().map(AsientoMapper::toAsiento)
                 .collect(Collectors.toList());
 
-        asientos.forEach(a -> a.setAvion(avion));
-
-        avion.setAsientos(asientos);
-
         Avion saved = avionRepository.save(avion);
-
-        return AvionMapper.toDto(saved);
+        asientos.forEach(a -> a.setAvion(saved));
+        avion.setAsientos(asientoRepository.saveAll(asientos));
     }
 
     @Transactional

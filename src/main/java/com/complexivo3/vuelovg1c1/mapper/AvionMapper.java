@@ -21,16 +21,17 @@ public class AvionMapper {
     }
 
     public static AvionDto toDto(Avion avion) {
-        return new AvionDto(
+        AvionDto dto = new AvionDto(
                 avion.getId(),
                 avion.getPlaca(),
                 avion.getNombre(),
                 avion.getEstado(),
                 avion.getWifi(),
                 avion.getModelo(),
-                avion.getMarca(),
-                avion.getAsientos().stream().map(AsientoMapper::toDto).collect(Collectors.toList())
+                avion.getMarca()
         );
+
+        return dto;
     }
 
 }

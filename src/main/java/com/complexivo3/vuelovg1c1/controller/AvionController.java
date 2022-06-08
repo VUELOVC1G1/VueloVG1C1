@@ -22,9 +22,9 @@ public class AvionController {
     }
 
     @PostMapping
-    public ResponseEntity<AvionDto> save(@RequestBody AvionDto request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(avionService.save(request));
+    public ResponseEntity<?> save(@RequestBody AvionDto request) {
+        avionService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping

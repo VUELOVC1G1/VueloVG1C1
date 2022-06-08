@@ -18,4 +18,14 @@ public class AvionDto {
     private String modelo;
     private String marca;
     private List<AsientoDto> asientos;
+
+    public AvionDto(Long id, String placa, String nombre, Boolean estado, String wifi, String modelo, String marca) {
+        this.id = id;
+        this.placa = placa;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.wifi = wifi;
+        this.modelo = modelo;
+        this.marca = marca;
+    }
 }

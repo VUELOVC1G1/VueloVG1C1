@@ -30,7 +30,7 @@ public class EmpleadoMapper {
         response.setFechaNacimiento(empleado.getFechaNacimiento());
         response.setEstado(empleado.isEstado());
         response.setUsuario(UsuarioMapper.userToResponse(empleado.getUsuario()));
-        response.setCargo(empleado.getCargos()
+        response.setCargos(empleado.getCargos()
                 .stream().map(CargoMapper::toDto)
                 .collect(Collectors.toList())
         );
