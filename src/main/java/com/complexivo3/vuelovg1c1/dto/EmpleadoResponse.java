@@ -3,7 +3,6 @@ package com.complexivo3.vuelovg1c1.dto;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class EmpleadoResponse {
@@ -14,5 +13,5 @@ public class EmpleadoResponse {
     private Date fechaNacimiento;
     private boolean estado;
     private UserDto usuario;
-    private List<CargoDto> cargo;
+    private CargoDto cargoDto;
 }

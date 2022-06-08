@@ -5,8 +5,6 @@ import com.complexivo3.vuelovg1c1.dto.EmpleadoResponse;
 import com.complexivo3.vuelovg1c1.model.Empleado;
 import com.complexivo3.vuelovg1c1.model.Roles;
 
-import java.util.stream.Collectors;
-
 public class EmpleadoMapper {
     public static Empleado toEmpleado(EmpleadoRequest request) {
         Empleado e = new Empleado();
@@ -17,7 +15,7 @@ public class EmpleadoMapper {
         e.setEstado(request.isEstado());
         e.setUsuario(UsuarioMapper.requestToUser(request.getUsuario()));
         e.getUsuario().setRol(Roles.EMPLEADO);
-        e.getCargos().add(CargoMapper.toCargo(request.getCargo()));
+        e.setCargo(CargoMapper.toCargo(request.getCargo()));
         return e;
     }
 
@@ -30,10 +28,7 @@ public class EmpleadoMapper {
         response.setFechaNacimiento(empleado.getFechaNacimiento());
         response.setEstado(empleado.isEstado());
         response.setUsuario(UsuarioMapper.userToResponse(empleado.getUsuario()));
-        response.setCargo(empleado.getCargos()
-                .stream().map(CargoMapper::toDto)
-                .collect(Collectors.toList())
-        );
+        response.setCargoDto(CargoMapper.toDto(empleado.getCargo()));
         return response;
     }
 }
