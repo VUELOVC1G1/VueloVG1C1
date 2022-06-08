@@ -11,7 +11,7 @@ public class AsientoMapper {
         dto.setPrecio(asiento.getPrecio());
         dto.setNombre(asiento.getNombre());
         dto.setTipoAsiento(TipoAsientoMapper.toDto(asiento.getTipoAsiento()));
-        return new AsientoDto();
+        return dto;
     }
 
     public static Asiento toAsiento(AsientoDto dto) {

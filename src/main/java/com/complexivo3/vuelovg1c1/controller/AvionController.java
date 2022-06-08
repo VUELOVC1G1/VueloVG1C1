@@ -28,7 +28,14 @@ public class AvionController {
     }
 
     @PutMapping
-    public ResponseEntity<AvionDto> update(@RequestBody AvionDto request) {
-        return ResponseEntity.ok(avionService.update(request));
+    public ResponseEntity<?> update(@RequestBody AvionDto request) {
+        avionService.update(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delteById(@PathVariable Long id) {
+        avionService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

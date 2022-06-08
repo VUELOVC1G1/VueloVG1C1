@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -31,7 +32,7 @@ public class Avion {
             orphanRemoval = true,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<Asiento> asientos;
+    private List<Asiento> asientos = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

@@ -8,7 +8,7 @@ public class TipoAsientoMapper {
     public static TipoAsientoDto toDto(TipoAsiento tipo) {
         TipoAsientoDto dto = new TipoAsientoDto();
         dto.setId(tipo.getId());
-        dto.setNombre(dto.getNombre());
+        dto.setNombre(tipo.getNombre());
         return dto;
     }
 

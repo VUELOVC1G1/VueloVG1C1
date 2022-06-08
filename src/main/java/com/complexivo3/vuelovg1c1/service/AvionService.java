@@ -2,10 +2,8 @@ package com.complexivo3.vuelovg1c1.service;
 
 import com.complexivo3.vuelovg1c1.dto.AsientoDto;
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
-import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.AsientoMapper;
 import com.complexivo3.vuelovg1c1.mapper.AvionMapper;
-import com.complexivo3.vuelovg1c1.mapper.TipoAsientoMapper;
 import com.complexivo3.vuelovg1c1.model.Asiento;
 import com.complexivo3.vuelovg1c1.model.Avion;
 import com.complexivo3.vuelovg1c1.repository.IAsientoRepository;
@@ -47,11 +45,16 @@ public class AvionService {
     }
 
     @Transactional
-    public AvionDto update(AvionDto request) {
-        Avion avion = avionRepository.findById(request.getId())
-                .orElseThrow(() -> new NotFoundException("No existe un avión con id: " + request.getId()));
-        Avion saved = avionRepository.save(avion);
-        return AvionMapper.toDto(saved);
+    public void update(AvionDto request) {
+        Avion avion = AvionMapper.toAvion(request);
+
+        List<Asiento> asientos = request.getAsientos()
+                .stream().map(AsientoMapper::toAsiento)
+                .collect(Collectors.toList());
+        avion.getAsientos().addAll(asientos);
+        asientos.forEach(a -> a.setAvion(avion));
+
+        avionRepository.save(avion);
     }
 
     private List<Asiento> generateAsientos(int numColumns, int numAsientos) {
@@ -71,4 +74,9 @@ public class AvionService {
         return asientos;
     }
 
+    public void deleteById(Long id) {
+        // TODO: handle exceptions
+        if (avionRepository.existsById(id))
+            avionRepository.deleteById(id);
+    }
 }
