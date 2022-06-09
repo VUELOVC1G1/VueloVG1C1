@@ -17,6 +17,7 @@ import java.util.Date;
 public class Horario {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Temporal(TemporalType.DATE)

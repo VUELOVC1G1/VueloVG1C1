@@ -24,4 +24,12 @@ public class UCharterMapper {
         response.setUsuario(UsuarioMapper.userToResponse(charter.getUsuario()));
         return response;
     }
+
+    public static UsuarioCharter toUCharter2(UCharterResponse uCharterResponse) {
+        UsuarioCharter charter = new UsuarioCharter();
+        charter.setId(uCharterResponse.getId());
+        charter.setEmpresa(uCharterResponse.getEmpresa());
+        charter.setRuc(uCharterResponse.getRuc());
+        return charter;
+    }
 }

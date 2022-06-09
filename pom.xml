@@ -38,6 +38,12 @@
                 <activatedProperties>carlos</activatedProperties>
             </properties>
         </profile>
+        <profile>
+            <id>cristian</id>
+            <properties>
+                <activatedProperties>cristian</activatedProperties>
+            </properties>
+        </profile>
     </profiles>
     <dependencies>
         <dependency>
