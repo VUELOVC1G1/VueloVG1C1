@@ -1,7 +1,8 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import com.complexivo3.vuelovg1c1.dto.AsientoDto;
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
+import com.complexivo3.vuelovg1c1.dto.AvionRequest;
+import com.complexivo3.vuelovg1c1.dto.AvionResponse;
 import com.complexivo3.vuelovg1c1.mapper.AsientoMapper;
 import com.complexivo3.vuelovg1c1.mapper.AvionMapper;
 import com.complexivo3.vuelovg1c1.model.Asiento;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class AvionService {
+public class AvionService implements IAvionService{
 
     private final IAvionRepository avionRepository;
     private final IAsientoRepository asientoRepository;
@@ -78,5 +79,15 @@ public class AvionService {
         // TODO: handle exceptions
         if (avionRepository.existsById(id))
             avionRepository.deleteById(id);
+    }
+
+
+    /** ---------------------------------------- MÉTODOS PROPUESTOS PARA ESTE SERVICIO ---------------------------------------- 
+     * @author Eduardo Mendieta
+    */
+    @Override
+    public AvionResponse crearAvion(AvionRequest request) {
+        Avion avion = AvionMapper.toAvion(request);
+        return AvionMapper.toResponse(avionRepository.save(avion));
     }
 }

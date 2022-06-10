@@ -1,6 +1,5 @@
 package com.complexivo3.vuelovg1c1.dto;
 
-import com.complexivo3.vuelovg1c1.model.UsuarioCharter;
 import lombok.Data;
 
 import java.util.Date;

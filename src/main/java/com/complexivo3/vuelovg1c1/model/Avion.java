@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +37,8 @@ public class Avion {
             fetch = FetchType.LAZY)
     private List<Asiento> asientos = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "vuelo_avion",
-            joinColumns = @JoinColumn(name = "id_vuelo", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_avion", referencedColumnName = "id")
-    )
+    @OneToMany(mappedBy = "avion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Vuelo> vuelos;
 
 }
