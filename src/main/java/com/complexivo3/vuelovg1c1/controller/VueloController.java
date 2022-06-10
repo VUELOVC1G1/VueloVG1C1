@@ -30,13 +30,12 @@ public class VueloController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletetipovuelobyId(@PathVariable Long id){
-
-        return new ResponseEntity(iVueloService.deltevyIdVuelo(id),HttpStatus.OK);
-
+        return new ResponseEntity<>(iVueloService.deltevyIdVuelo(id),HttpStatus.OK);
     }
+
     @PutMapping("/")
     public ResponseEntity<?> updatetipovuelo(@RequestBody VueloRequest vueloRequest) {
-        return new ResponseEntity("Modificado correctamente"+iVueloService.updateVuelo(vueloRequest),HttpStatus.CREATED);
+        return new ResponseEntity<>("Modificado correctamente"+iVueloService.updateVuelo(vueloRequest),HttpStatus.CREATED);
     }
 
 

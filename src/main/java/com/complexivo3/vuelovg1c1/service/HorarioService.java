@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -49,8 +50,8 @@ public class HorarioService implements IHorarioService{
     public Boolean updateIdhorario(HorarioRequest horarioRequest) {
         Optional<Horario> ur=iHorarioRepository.findById(horarioRequest.getId());
         if (ur.isPresent()) {
-            ur.get().setFechaInicio(horarioRequest.getFechaInicio());
-            ur.get().setFechaFin(horarioRequest.getFechaFin());
+            ur.get().setFechaInicio(new Date(horarioRequest.getFechaInicio().getTime()+(1000 * 60 * 60 * 24)));
+            ur.get().setFechaFin(new Date(horarioRequest.getFechaFin().getTime()+(1000 * 60 * 60 * 24)));
 
             try {
                 Horario horario = iHorarioRepository.save(ur.get());

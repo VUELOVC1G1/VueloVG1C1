@@ -4,13 +4,15 @@ import com.complexivo3.vuelovg1c1.dto.HorarioRequest;
 import com.complexivo3.vuelovg1c1.dto.HorarioResponse;
 import com.complexivo3.vuelovg1c1.model.Horario;
 
+import java.util.Date;
+
 public class HorarioMapper {
 
     public static Horario toHorario(HorarioRequest horarioRequest){
         Horario ho= new Horario();
         ho.setId(horarioRequest.getId());
-        ho.setFechaFin(horarioRequest.getFechaFin());
-        ho.setFechaInicio(horarioRequest.getFechaInicio());
+        ho.setFechaFin(new Date(horarioRequest.getFechaFin().getTime()+(1000 * 60 * 60 * 24)));
+        ho.setFechaInicio(new Date(horarioRequest.getFechaInicio().getTime()+(1000 * 60 * 60 * 24)));
         return  ho;
     }
 

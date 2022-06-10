@@ -4,14 +4,16 @@ import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
 
+import java.util.Date;
+
 public class VueloMapper {
 
     public static Vuelo toVuelo(VueloRequest vueloRequest){
         Vuelo vuelo= new Vuelo();
         vuelo.setId(vueloRequest.getId());
-        vuelo.setFechaCreacion(vueloRequest.getFechaCreacion());
+        vuelo.setFechaCreacion(new Date(vueloRequest.getFechaCreacion().getTime()+(1000 * 60 * 60 * 24)));
         vuelo.setPrecio(vueloRequest.getPrecio());
-        vuelo.setFechaVuelo(vueloRequest.getFechaVuelo());
+        vuelo.setFechaVuelo(new Date(vueloRequest.getFechaVuelo().getTime()+(1000 * 60 * 60 * 24)));
         vuelo.setEstado(vueloRequest.isEstado());
         vuelo.setObservacion(vueloRequest.getObservacion());
         //otras entitys

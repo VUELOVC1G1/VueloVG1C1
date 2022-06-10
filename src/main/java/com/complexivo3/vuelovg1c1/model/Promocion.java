@@ -16,6 +16,7 @@ import javax.persistence.*;
 public class Promocion {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String descripcion;
