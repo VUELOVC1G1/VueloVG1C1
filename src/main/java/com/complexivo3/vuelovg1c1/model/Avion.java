@@ -38,7 +38,7 @@ public class Avion {
     private List<Asiento> asientos = new ArrayList<>();
 
     @OneToMany(mappedBy = "avion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Vuelo> vuelos;
 
 }

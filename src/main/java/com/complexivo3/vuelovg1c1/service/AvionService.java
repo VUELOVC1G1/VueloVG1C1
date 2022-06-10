@@ -3,6 +3,7 @@ package com.complexivo3.vuelovg1c1.service;
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
 import com.complexivo3.vuelovg1c1.dto.AvionRequest;
 import com.complexivo3.vuelovg1c1.dto.AvionResponse;
+import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.AsientoMapper;
 import com.complexivo3.vuelovg1c1.mapper.AvionMapper;
 import com.complexivo3.vuelovg1c1.model.Asiento;
@@ -47,14 +48,19 @@ public class AvionService implements IAvionService{
 
     @Transactional
     public void update(AvionDto request) {
-        Avion avion = AvionMapper.toAvion(request);
+        Avion avion = avionRepository.findById(request.getId()).orElseThrow(() -> new NotFoundException("No existe el avión con id: " + request.getId()));
+        avion.setWifi(request.getWifi());
+        avion.setPlaca(request.getPlaca());
+        avion.setModelo(request.getModelo());
+        avion.setNombre(request.getNombre());
+        avion.setMarca(request.getMarca());
+        avion.setEstado(request.getEstado());
 
         List<Asiento> asientos = request.getAsientos()
                 .stream().map(AsientoMapper::toAsiento)
                 .collect(Collectors.toList());
         avion.getAsientos().addAll(asientos);
         asientos.forEach(a -> a.setAvion(avion));
-
         avionRepository.save(avion);
     }
 

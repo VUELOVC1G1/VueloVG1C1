@@ -26,7 +26,7 @@ public class Asiento {
     @JoinColumn(name = "id_tipo_asiento")
     private TipoAsiento tipoAsiento;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_avion")
     private Avion avion;
 
