@@ -11,9 +11,9 @@ public class PedidoMapper {
     public static Pedido topedido(PedidoRequest pedidoRequest){
         Pedido pedido=new Pedido();
         pedido.setId(pedidoRequest.getId());
-        pedido.setEstado(pedido.isEstado());
-        pedido.setFecha(new Date( pedido.getFecha().getTime()+(1000 * 60 * 60 * 24)));
-        pedido.setRuta(pedido.getRuta());
+        pedido.setEstado(pedidoRequest.isEstado());
+        pedido.setFecha(new Date( pedidoRequest.getFecha().getTime()+(1000 * 60 * 60 * 24)));
+        pedido.setRuta(pedidoRequest.getRuta());
 
         return pedido;
     }
