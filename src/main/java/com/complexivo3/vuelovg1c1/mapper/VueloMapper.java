@@ -5,6 +5,7 @@ import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class VueloMapper {
 
@@ -18,7 +19,8 @@ public class VueloMapper {
         vuelo.setObservacion(vueloRequest.getObservacion());
         //otras entitys
 
-        vuelo.setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
+        if (Objects.nonNull(vuelo.getUsuarioCharter()))
+            vuelo.setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
         vuelo.setRuta(RutaMapper.toRuta(vueloRequest.getRutaRequest()));
         vuelo.setHorario(HorarioMapper.toHorario(vueloRequest.getHorarioRequest()));
         vuelo.setTipo(TipoVueloMapper.toTipoVuelo(vueloRequest.getTipoVueloRequest()));

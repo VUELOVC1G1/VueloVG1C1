@@ -42,6 +42,10 @@ public class BoletoService {
         Pasajero pasajero = pasajeroRepository.findById(request.getPasajeroId())
                 .orElseThrow(() -> new NotFoundException("No existe un pasajero con id: " + request.getPasajeroId()));
 
+        pago.setBoleto(boleto);
+        maletas.forEach(m -> m.setBoleto(boleto));
+        asientos.forEach(a -> a.getBoletos().add(boleto));
+
         boleto.setPagos(pago);
         boleto.setMaletas(maletas);
         boleto.setAsientos(asientos);

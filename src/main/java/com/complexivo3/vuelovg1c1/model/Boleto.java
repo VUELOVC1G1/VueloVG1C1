@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name="boletos")
+@Table(name = "boletos")
 public class Boleto {
 
     @Id
@@ -24,10 +24,10 @@ public class Boleto {
     private Date fecha;
     private String qr;
 
-    @OneToOne(mappedBy = "boleto", orphanRemoval = true)
+    @OneToOne(mappedBy = "boleto", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Pago pagos;
 
-    @OneToMany(mappedBy = "boleto" , orphanRemoval = true)
+    @OneToMany(mappedBy = "boleto", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Maleta> maletas;
 
     @ManyToMany(mappedBy = "boletos")
