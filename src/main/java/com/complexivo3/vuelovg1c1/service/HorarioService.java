@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -62,6 +64,14 @@ public class HorarioService implements IHorarioService{
         }else{
             throw new  NotFoundException("No existe un horario con id: " + horarioRequest.getId());
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<HorarioResponse> findAll() {
+        return iHorarioRepository.findAll()
+                .stream().map(HorarioMapper::toHorarioResponse)
+                .collect(Collectors.toList());
     }
 
 

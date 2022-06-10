@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1")
 public class HorarioController {
 
     private final IHorarioService iHorarioService;
@@ -37,4 +37,10 @@ public class HorarioController {
     public ResponseEntity<?> updateHorario(@RequestBody HorarioRequest horarioRequest) {
         return new ResponseEntity("Modificado correctamente"+iHorarioService.updateIdhorario(horarioRequest),HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<>(iHorarioService.findAll(), HttpStatus.OK);
+    }
+
 }

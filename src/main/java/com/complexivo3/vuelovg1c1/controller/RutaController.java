@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1")
 public class RutaController {
 
     private final IRutaService iRutaService;
@@ -38,7 +38,7 @@ public class RutaController {
     }
     @PutMapping
     public ResponseEntity<?> updateruta(@RequestBody RutaRequest rutaRequest) {
-        return new ResponseEntity("Modificado correctamente"+iRutaService.updateruta(rutaRequest),HttpStatus.CREATED);
+        return new ResponseEntity("Modificado correctamente"+iRutaService.updateruta(rutaRequest),HttpStatus.OK);
     }
 
     @GetMapping("/rutas/all")
