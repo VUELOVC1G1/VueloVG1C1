@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class Vuelo {
     @JoinColumn(name = "id_horario")
     private Horario horario;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_ruta")
     private Ruta ruta;
 
@@ -51,10 +54,11 @@ public class Vuelo {
     @JoinColumn(name = "id_tipo")
     private TipoVuelo tipo;
 
-    @OneToMany(mappedBy = "vuelo")
+    @OneToMany(mappedBy = "vuelo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Promocion> promociones;
 
-    @ManyToMany
-    private List<Avion> aviones;
-
+    @ManyToOne
+    @JoinColumn(name = "id_avion")
+    private Avion avion;
 }

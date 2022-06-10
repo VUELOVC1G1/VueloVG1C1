@@ -2,6 +2,8 @@ package com.complexivo3.vuelovg1c1.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +34,9 @@ public class UsuarioCharter {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
-    private Manifiesto manifiesto;
+    @OneToMany(mappedBy = "usuarioCharter", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private  List<Manifiesto> manifiestos;
 
     @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
     private Pedido pedido;

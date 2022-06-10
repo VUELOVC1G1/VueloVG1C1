@@ -5,8 +5,17 @@ import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.VueloMapper;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
+import com.complexivo3.vuelovg1c1.repository.IPromocionRepository;
+import com.complexivo3.vuelovg1c1.repository.IRutaRepository;
 import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class VueloService implements IVueloService{
 
     private final IVueloRepository iVueloRepository;
+    private final IRutaRepository rutaRepository;
+    private final IPromocionRepository promocionRepository;
+
+
+
     @Transactional(readOnly = true)
     @Override
     public VueloResponse findByVueloId(Long id) {
@@ -41,6 +55,89 @@ public class VueloService implements IVueloService{
     @Transactional
     @Override
     public Boolean updateVuelo(VueloRequest vueloRequest) {
+        return null;
+    }
+
+
+    @Override
+    public List<VueloResponse> getVuelosDisponiblesPorRuta(Long idRuta) {
+        if(rutaRepository.existsById(idRuta)){
+            List<Vuelo> vuelos = iVueloRepository.getVuelosDisponiblesPorRuta(idRuta, true);
+            return toVuelosResponse(vuelos);
+        }
+        return null;
+    }
+
+
+    @Override
+    public VueloResponse getVueloDisponiblePorId(Long idVuelo) {
+        Vuelo vuelo = iVueloRepository.getVueloDisponiblePorId(idVuelo, true).orElseThrow(() -> new NotFoundException("No existe un vuelo con  con id: " + idVuelo));
+        return VueloMapper.toVueloResponse(vuelo);
+    }
+
+
+    @Override
+    public List<VueloResponse> getVuelosDisponiblesPorFechaRuta(Long idRuta, String fecha) {
+        Date fechaVuelo = getDate(fecha);
+        if(rutaRepository.existsById(idRuta) && fechaVuelo != null){
+            List<Vuelo> vuelos = iVueloRepository.getVuelosDisponiblesPorFechaRuta(idRuta, fechaVuelo, true);
+            return toVuelosResponse(vuelos);
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<VueloResponse> getVuelosDisponiblesPorFecha(String fecha) {
+        Date fechaVuelo = getDate(fecha);
+        if(fechaVuelo != null){
+            List<Vuelo> vuelos = iVueloRepository.getVuelosDisponiblesPorFecha(fechaVuelo, true);
+            return toVuelosResponse(vuelos);
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<VueloResponse> getVuelosDisponibles() {
+        List<Vuelo> vuelos = iVueloRepository.getVuelosPorEstado(true);
+        return toVuelosResponse(vuelos);
+    }
+  
+    
+    private List<VueloResponse> toVuelosResponse(List<Vuelo> vuelos){
+        List<VueloResponse> response = new ArrayList<>();
+        for (Vuelo vuelo : vuelos) {
+            response.add(VueloMapper.toVueloResponse(vuelo));
+        }
+        return response;
+    }
+
+
+    private Date getDate(String fecha){
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            return formato.parse(fecha);
+        }catch(ParseException e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<VueloResponse> getVuelosDisponiblesPromocion(Long idPromocion) {
+        if(promocionRepository.existsById(idPromocion)){
+            List<Vuelo> vuelos = iVueloRepository.getVuelosDisponiblesPromocion(idPromocion, true);
+            return toVuelosResponse(vuelos);
+        }
+        return null;
+    }
+
+    @Override
+    public List<VueloResponse> getVuelosDisponiblesPromocionRuta(Long idPromocion, Long idRuta) {
+        if(promocionRepository.existsById(idPromocion) && rutaRepository.existsById(idRuta)){
+            List<Vuelo> vuelos = iVueloRepository.getVuelosDisponiblesPromocionRuta(idPromocion, idRuta, true);
+            return toVuelosResponse(vuelos);
+        }
         return null;
     }
 }
