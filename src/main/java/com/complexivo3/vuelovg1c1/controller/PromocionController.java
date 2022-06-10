@@ -34,6 +34,6 @@ public class PromocionController {
     }
     @PutMapping("/promociones")
     public ResponseEntity<?> updatepromocion(@RequestBody PromocionRequest promocionRequest) {
-        return new ResponseEntity("Modificado correctamente"+iPromocionService.updatePromocion(promocionRequest),HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

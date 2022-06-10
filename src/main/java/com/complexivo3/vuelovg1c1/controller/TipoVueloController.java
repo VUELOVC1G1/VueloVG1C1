@@ -36,6 +36,6 @@ public class TipoVueloController {
     }
     @PutMapping("/tiposvuelos")
     public ResponseEntity<?> updatetipovuelo(@RequestBody TipoVueloRequest tipoVueloRequest) {
-        return new ResponseEntity("Modificado correctamente"+iTipoVueloService.updatetipovuelo(tipoVueloRequest),HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
