@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -63,6 +65,20 @@ public class RutaService implements IRutaService {
         return RutaMapper.toRutaResponse(r);
     }
 
+    @Transactional
+    public List<RutaResponse> listAllRutas(){
+            return iRutaRepository.findAll().stream().map(a -> {
+                RutaResponse rutaResponse=new RutaResponse();
+                rutaResponse.setId(a.getId());
+                rutaResponse.setOrigen(a.getOrigen());
+                rutaResponse.setDestino(a.getDestino());
+                rutaResponse.setDescripcion(a.getDescripcion());
+                return rutaResponse;
+            }).collect(Collectors.toList());
+            }
+
+    }
 
 
-}
+
+

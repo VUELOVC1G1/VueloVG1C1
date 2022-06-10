@@ -27,13 +27,13 @@ public class VueloController {
     }
 
     @DeleteMapping("/vuelos/{id}")
-    public ResponseEntity<?> deletetipovuelobyId(@PathVariable Long id){
+    public ResponseEntity<?> deletevuelobyId(@PathVariable Long id){
 
         return new ResponseEntity(iVueloService.deltevyIdVuelo(id),HttpStatus.OK);
 
     }
     @PutMapping("/vuelos")
-    public ResponseEntity<?> updatetipovuelo(@RequestBody VueloRequest vueloRequest) {
+    public ResponseEntity<?> updatevuelo(@RequestBody VueloRequest vueloRequest) {
         return new ResponseEntity("Modificado correctamente"+iVueloService.updateVuelo(vueloRequest),HttpStatus.CREATED);
     }
 }
