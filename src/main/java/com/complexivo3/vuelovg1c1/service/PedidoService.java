@@ -7,6 +7,7 @@ import com.complexivo3.vuelovg1c1.mapper.PedidoMapper;
 import com.complexivo3.vuelovg1c1.model.*;
 import com.complexivo3.vuelovg1c1.repository.IPedidoRepository;
 import com.complexivo3.vuelovg1c1.repository.IUCharterRepository;
+import jdk.internal.icu.lang.UCharacter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class PedidoService implements IPedidoService{
     public void guardarPedido(PedidoRequest pedidoRequest) {
         Pedido p=PedidoMapper.topedido(pedidoRequest);
         UsuarioCharter uch= iuCharterRepository.findById(pedidoRequest.getId_charter())
-                .orElseThrow(() -> new NotFoundException("No existe un cliente charter con id: " + pedidoRequest));
+                .orElseThrow(() -> new NotFoundException("No existe un cliente charter con id: " + pedidoRequest.getId_charter()));
         p.setUsuarioCharter(uch);
         Pedido v= iPedidoRepository.save(p);
     }
@@ -56,7 +57,9 @@ public class PedidoService implements IPedidoService{
             ur.get().setFecha(new Date(pedidoRequest.getFecha().getTime()+(1000 * 60 * 60 * 24)));
             ur.get().setRuta(pedidoRequest.getRuta());
             ur.get().setEstado(pedidoRequest.isEstado());
-            //ur.get().setUsuarioCharter(UCharterMapper.toUCharter2(pedidoRequest.getId_charter()));
+            UsuarioCharter uch= iuCharterRepository.findById(pedidoRequest.getId_charter())
+                    .orElseThrow(() -> new NotFoundException("No existe un cliente charter con id: " + pedidoRequest.getId_charter()));
+            ur.get().setUsuarioCharter(uch);
 
             try {
                 Pedido pedido = iPedidoRepository.save(ur.get());
