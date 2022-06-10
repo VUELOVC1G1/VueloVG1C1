@@ -33,12 +33,13 @@ public class RutaController {
     @DeleteMapping("/rutas/{id}")
     public ResponseEntity<?> deleterutabyId(@PathVariable Long id){
 
-        return new ResponseEntity(iRutaService.deltevyIdRuta(id),HttpStatus.OK);
+        return new ResponseEntity<>(iRutaService.deltevyIdRuta(id),HttpStatus.OK);
 
     }
     @PutMapping
     public ResponseEntity<?> updateruta(@RequestBody RutaRequest rutaRequest) {
-        return new ResponseEntity("Modificado correctamente"+iRutaService.updateruta(rutaRequest),HttpStatus.OK);
+        iRutaService.updateruta(rutaRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/rutas/all")
