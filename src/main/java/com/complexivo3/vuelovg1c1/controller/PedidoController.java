@@ -34,6 +34,7 @@ public class PedidoController {
     }
     @PutMapping("/pedidos")
     public ResponseEntity<?> updatepedido(@RequestBody PedidoRequest pedidoRequest) {
+        iPedidoService.updatePedido(pedidoRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

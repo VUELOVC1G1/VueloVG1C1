@@ -36,6 +36,7 @@ public class TipoVueloController {
     }
     @PutMapping("/tiposvuelos")
     public ResponseEntity<?> updatetipovuelo(@RequestBody TipoVueloRequest tipoVueloRequest) {
+        iTipoVueloService.updatetipovuelo(tipoVueloRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

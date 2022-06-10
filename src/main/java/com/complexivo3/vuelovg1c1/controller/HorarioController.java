@@ -35,6 +35,7 @@ public class HorarioController {
     }
     @PutMapping("/horarios")
     public ResponseEntity<?> updateHorario(@RequestBody HorarioRequest horarioRequest) {
+        iHorarioService.updateIdhorario(horarioRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
