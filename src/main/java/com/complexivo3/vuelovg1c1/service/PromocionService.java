@@ -4,6 +4,8 @@ import com.complexivo3.vuelovg1c1.dto.PromocionRequest;
 import com.complexivo3.vuelovg1c1.dto.PromocionResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.PromocionMapper;
+import com.complexivo3.vuelovg1c1.mapper.VueloMapper;
+import com.complexivo3.vuelovg1c1.model.Pedido;
 import com.complexivo3.vuelovg1c1.model.Promocion;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
 import com.complexivo3.vuelovg1c1.repository.IPromocionRepository;
@@ -11,6 +13,9 @@ import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -32,11 +37,12 @@ public class PromocionService implements IPromocionService{
     public void guardarPromocion(PromocionRequest promocionRequest) {
         Promocion p=PromocionMapper.topromocion(promocionRequest);
         Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
-                .orElseThrow(() -> new NotFoundException("No existe un veuelo con id: " + promocionRequest));
+                .orElseThrow(() -> new NotFoundException("No existe un veuelo con id: " + promocionRequest.getVueloid()));
         p.setVuelo(vuelo);
         Promocion v= iPromocionRepository.save(p);
     }
 
+    @Transactional
     @Override
     public PromocionResponse deltevyIdPromocion(Long id) {
         Promocion p= iPromocionRepository.findById(id)
@@ -45,10 +51,26 @@ public class PromocionService implements IPromocionService{
         return PromocionMapper.topromocionresponse(p);
     }
 
+    @Transactional
     @Override
     public Boolean updatePromocion(PromocionRequest promocionRequest) {
+        Optional<Promocion> ur=iPromocionRepository.findById(promocionRequest.getId());
+        if (ur.isPresent()) {
+            Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
+                    .orElseThrow(()-> new NotFoundException("No existe un vuelo con id: " + promocionRequest.getVueloid()));
+            ur.get().setVuelo(vuelo);
+            ur.get().setDescripcion(promocionRequest.getDescripcion());
+            ur.get().setDescuento(promocionRequest.getDescuento());
 
-
-        return null;
+            try {
+                Promocion promocion = iPromocionRepository.save(ur.get());
+                return true;
+            } catch (Exception ex) {
+                throw new  NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
+            }
+        }else{
+            throw new  NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
+        }
     }
-}
+    }
+
