@@ -28,6 +28,11 @@ public class TipoVueloController {
         return ResponseEntity.ok(iTipoVueloService.findBytipovueloId(id));
     }
 
+    @GetMapping("/tiposvuelos")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(iTipoVueloService.findAll());
+    }
+
     @DeleteMapping("/tiposvuelos/{id}")
     public ResponseEntity<?> deletetipovuelobyId(@PathVariable Long id){
 

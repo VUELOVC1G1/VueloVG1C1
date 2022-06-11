@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -59,5 +61,13 @@ public class TipoVueloService implements ITipoVueloService {
         }else{
             throw new  NotFoundException("No existe un tipo de vuelo   con id: " + tipoVueloRequest.getId());
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<TipoVueloResponse> findAll() {
+        return iTipoVueloRepository.findAll()
+                .stream().map(TipoVueloMapper::toResponsoTipoVuelo)
+                .collect(Collectors.toList());
     }
 }
