@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AvionRequest {
+    private String id;
     private String placa;
     private String nombre;
     private Boolean estado;

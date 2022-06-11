@@ -16,4 +16,5 @@ public class VueloResponse {
     private UCharterResponse uCharterResponse;
     private RutaResponse rutaResponse;
     private TipoVueloResponse tipoVueloResponse;
+    private AvionResponse avionResponse;
 }

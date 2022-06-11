@@ -4,7 +4,9 @@ import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.*;
+import com.complexivo3.vuelovg1c1.model.Avion;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
+import com.complexivo3.vuelovg1c1.repository.IAvionRepository;
 import com.complexivo3.vuelovg1c1.repository.IPromocionRepository;
 import com.complexivo3.vuelovg1c1.repository.IRutaRepository;
 import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
@@ -30,7 +32,7 @@ public class VueloService implements IVueloService{
     private final IVueloRepository iVueloRepository;
     private final IRutaRepository rutaRepository;
     private final IPromocionRepository promocionRepository;
-
+    private final IAvionRepository iAvionRepository;
 
 
     @Transactional(readOnly = true)
@@ -45,7 +47,11 @@ public class VueloService implements IVueloService{
     @Override
     public void  guardarVuelo(VueloRequest vueloRequest) {
         Vuelo vuelo=VueloMapper.toVuelo(vueloRequest);
+        Avion avion=iAvionRepository.findById(vueloRequest.getAvionid())
+                .orElseThrow(() -> new NotFoundException("No existe un avion con id: " + vueloRequest.getAvionid()));
+        vuelo.setAvion(avion);
         Vuelo v= iVueloRepository.save(vuelo);
+
     }
     @Transactional
     @Override
@@ -70,6 +76,9 @@ public class VueloService implements IVueloService{
             vuel.get().setRuta(RutaMapper.toRuta(vueloRequest.getRutaRequest()));
             vuel.get().setTipo(TipoVueloMapper.toTipoVuelo(vueloRequest.getTipoVueloRequest()));
             vuel.get().setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
+            Avion avion=iAvionRepository.findById(vueloRequest.getAvionid())
+                    .orElseThrow(() -> new NotFoundException("No existe un avion con id: " + vueloRequest.getAvionid()));
+            vuel.get().setAvion(avion);
 
             try {
                 Vuelo vuelo = iVueloRepository.save(vuel.get());

@@ -34,7 +34,7 @@ public class VueloController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<?> updatetipovuelo(@RequestBody VueloRequest vueloRequest) {
+    public ResponseEntity<?> updatevuelo(@RequestBody VueloRequest vueloRequest) {
         iVueloService.updateVuelo(vueloRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }

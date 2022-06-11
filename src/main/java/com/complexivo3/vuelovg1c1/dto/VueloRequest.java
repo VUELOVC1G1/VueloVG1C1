@@ -16,4 +16,5 @@ public class VueloRequest {
     private UCharterResponse uCharterResponse;
     private RutaRequest rutaRequest;
     private TipoVueloRequest tipoVueloRequest;
+    private Long avionid;
 }

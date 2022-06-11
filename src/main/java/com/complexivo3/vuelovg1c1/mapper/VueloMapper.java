@@ -25,8 +25,6 @@ public class VueloMapper {
         vuelo.setRuta(RutaMapper.toRuta(vueloRequest.getRutaRequest()));
         vuelo.setHorario(HorarioMapper.toHorario(vueloRequest.getHorarioRequest()));
         vuelo.setTipo(TipoVueloMapper.toTipoVuelo(vueloRequest.getTipoVueloRequest()));
-
-
         return vuelo;
     }
 
@@ -44,6 +42,7 @@ public class VueloMapper {
         vueloResponse.setRutaResponse(RutaMapper.toRutaResponse(vuelo.getRuta()));
         vueloResponse.setHorarioResponse(HorarioMapper.toHorarioResponse(vuelo.getHorario()));
         vueloResponse.setTipoVueloResponse(TipoVueloMapper.toResponsoTipoVuelo(vuelo.getTipo()));
+        vueloResponse.setAvionResponse(AvionMapper.toResponse(vuelo.getAvion()));
         return vueloResponse;
     }
 

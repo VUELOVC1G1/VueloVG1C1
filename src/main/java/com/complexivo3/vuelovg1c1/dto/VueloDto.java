@@ -17,4 +17,5 @@ public class VueloDto {
     private HorarioRequest horarioRequest;
     private CharterRequest charterRequest;
     private RutaRequest rutaRequest;
+
 }
