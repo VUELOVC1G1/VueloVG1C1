@@ -18,4 +18,6 @@ public interface IVueloService {
     List<VueloResponse> getVuelosDisponibles();
     List<VueloResponse> getVuelosDisponiblesPromocion(Long idPromocion);
     List<VueloResponse> getVuelosDisponiblesPromocionRuta(Long idPromocion, Long idRuta);
+
+    List<VueloResponse> findAll();
 }

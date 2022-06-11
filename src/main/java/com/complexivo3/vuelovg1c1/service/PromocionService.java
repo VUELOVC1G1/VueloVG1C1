@@ -1,11 +1,10 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.PromocionVueloResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionRequest;
 import com.complexivo3.vuelovg1c1.dto.PromocionResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.PromocionMapper;
-import com.complexivo3.vuelovg1c1.mapper.VueloMapper;
-import com.complexivo3.vuelovg1c1.model.Pedido;
 import com.complexivo3.vuelovg1c1.model.Promocion;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
 import com.complexivo3.vuelovg1c1.repository.IPromocionRepository;
@@ -14,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -26,7 +26,7 @@ public class PromocionService implements IPromocionService{
 
     @Transactional(readOnly = true)
     @Override
-    public PromocionResponse findByPromocionId(Long id) {
+    public PromocionVueloResponse findByPromocionId(Long id) {
         Promocion promocion= iPromocionRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No existe una promocion con id: " + id));
         return PromocionMapper.topromocionresponse(promocion);
@@ -48,7 +48,7 @@ public class PromocionService implements IPromocionService{
         Promocion p= iPromocionRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No existe una promocion con  con id: " + id));
         iPromocionRepository.delete(p);
-        return PromocionMapper.topromocionresponse(p);
+        return PromocionMapper.topromocionresponsedelete(p);
     }
 
     @Transactional
@@ -72,5 +72,13 @@ public class PromocionService implements IPromocionService{
             throw new  NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
         }
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<PromocionVueloResponse> findAll() {
+        return iPromocionRepository.findAll()
+                .stream().map(PromocionMapper::topromocionresponse)
+                .collect(Collectors.toList());
     }
+}
 

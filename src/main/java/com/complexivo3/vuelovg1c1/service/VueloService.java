@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -163,5 +164,13 @@ public class VueloService implements IVueloService{
             return toVuelosResponse(vuelos);
         }
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<VueloResponse> findAll() {
+        return iVueloRepository.findAll()
+                .stream().map(VueloMapper::toVueloResponse)
+                .collect(Collectors.toList());
     }
 }

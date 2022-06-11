@@ -22,8 +22,13 @@ public class PromocionController {
     }
 
     @GetMapping("/promociones/{id}")
-    public ResponseEntity<PromocionResponse> findByIdPromocion(@PathVariable Long id) {
+    public ResponseEntity<?> findByIdPromocion(@PathVariable Long id) {
         return ResponseEntity.ok(iPromocionService.findByPromocionId(id));
+    }
+
+    @GetMapping("/promociones")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(iPromocionService.findAll());
     }
 
     @DeleteMapping("/promociones/{id}")

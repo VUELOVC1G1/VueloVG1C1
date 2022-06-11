@@ -38,7 +38,8 @@ public class VueloMapper {
         vueloResponse.setEstado(vuelo.isEstado());
         vueloResponse.setObservacion(vuelo.getObservacion());
         //otras entitys
-        vueloResponse.setUCharterResponse(UCharterMapper.toResponse(vuelo.getUsuarioCharter()));//revisar
+        if (Objects.nonNull(vuelo.getUsuarioCharter()))
+            vueloResponse.setUCharterResponse(UCharterMapper.toResponse(vuelo.getUsuarioCharter()));//revisar
         vueloResponse.setRutaResponse(RutaMapper.toRutaResponse(vuelo.getRuta()));
         vueloResponse.setHorarioResponse(HorarioMapper.toHorarioResponse(vuelo.getHorario()));
         vueloResponse.setTipoVueloResponse(TipoVueloMapper.toResponsoTipoVuelo(vuelo.getTipo()));

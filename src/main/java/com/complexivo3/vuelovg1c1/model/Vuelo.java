@@ -46,7 +46,7 @@ public class Vuelo {
     @JoinColumn(name = "id_ruta")
     private Ruta ruta;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private UsuarioCharter usuarioCharter;
 

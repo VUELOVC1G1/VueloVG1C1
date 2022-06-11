@@ -39,7 +39,7 @@ public class HorarioController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/horarios")
     public ResponseEntity<?> getAll() {
         return new ResponseEntity<>(iHorarioService.findAll(), HttpStatus.OK);
     }

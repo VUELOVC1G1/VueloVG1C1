@@ -40,6 +40,12 @@ public class VueloController {
     }
 
 
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(iVueloService.findAll());
+    }
+
+
     @GetMapping("/disponibles/rutas/{idRuta}")
     public ResponseEntity<?> getVuelosDisponiblesPorRuta(@PathVariable Long idRuta){
         return ResponseEntity.ok(iVueloService.getVuelosDisponiblesPorRuta(idRuta));
