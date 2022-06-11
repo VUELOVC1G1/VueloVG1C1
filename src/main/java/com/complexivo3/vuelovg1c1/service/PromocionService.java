@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.PromocionVueloComercialResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionVueloResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionRequest;
 import com.complexivo3.vuelovg1c1.dto.PromocionResponse;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -77,6 +79,30 @@ public class PromocionService implements IPromocionService{
     @Override
     public List<PromocionVueloResponse> findAll() {
         return iPromocionRepository.findAll()
+                .stream().map(PromocionMapper::topromocionresponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<PromocionVueloComercialResponse> findAllComerciales() {
+        List<Promocion> promocions = iPromocionRepository.findAll();
+        List<Promocion> comerciales = promocions
+                .stream().filter(p -> Objects.isNull(p.getVuelo().getUsuarioCharter()))
+                .collect(Collectors.toList());
+        return comerciales
+                .stream().map(PromocionMapper::topromocionresponsecomercial)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<PromocionVueloResponse> findAllCharter() {
+        List<Promocion> promocions = iPromocionRepository.findAll();
+        List<Promocion> comerciales = promocions
+                .stream().filter(p -> Objects.nonNull(p.getVuelo().getUsuarioCharter()))
+                .collect(Collectors.toList());
+        return comerciales
                 .stream().map(PromocionMapper::topromocionresponse)
                 .collect(Collectors.toList());
     }

@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.mapper;
 
+import com.complexivo3.vuelovg1c1.dto.PromocionVueloComercialResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionVueloResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionRequest;
 import com.complexivo3.vuelovg1c1.dto.PromocionResponse;
@@ -31,6 +32,16 @@ public class PromocionMapper {
         promocionResponse.setDescripcion(promocion.getDescripcion());
         promocionResponse.setDescuento(promocion.getDescuento());
         promocionResponse.setVuelo(VueloMapper.toVueloResponse(promocion.getVuelo()));
+
+        return promocionResponse;
+    }
+
+    public static PromocionVueloComercialResponse topromocionresponsecomercial(Promocion promocion){
+        PromocionVueloComercialResponse promocionResponse = new PromocionVueloComercialResponse();
+        promocionResponse.setId(promocion.getId());
+        promocionResponse.setDescripcion(promocion.getDescripcion());
+        promocionResponse.setDescuento(promocion.getDescuento());
+        promocionResponse.setVuelo(VueloMapper.toVueloComercialResponse(promocion.getVuelo()));
 
         return promocionResponse;
     }

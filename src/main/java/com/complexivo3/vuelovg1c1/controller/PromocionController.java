@@ -31,6 +31,16 @@ public class PromocionController {
         return ResponseEntity.ok(iPromocionService.findAll());
     }
 
+    @GetMapping("/promociones/comerciales")
+    public ResponseEntity<?> findAllComerciales() {
+        return ResponseEntity.ok(iPromocionService.findAllComerciales());
+    }
+
+    @GetMapping("/promociones/charters")
+    public ResponseEntity<?> findAllCharter() {
+        return ResponseEntity.ok(iPromocionService.findAllCharter());
+    }
+
     @DeleteMapping("/promociones/{id}")
     public ResponseEntity<?> deletepromocionbyId(@PathVariable Long id){
 
