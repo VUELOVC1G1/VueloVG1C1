@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,7 +29,7 @@ public class Horario {
     @Column(name = "fecha_fin")
     private Date fechaFin;
 
-    @OneToOne(mappedBy = "horario")
-    private Vuelo vuelo;
+    @OneToMany(mappedBy = "horario")
+    private List<Vuelo> vuelos;
 
 }

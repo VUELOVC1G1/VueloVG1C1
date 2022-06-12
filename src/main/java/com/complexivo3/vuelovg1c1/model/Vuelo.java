@@ -38,7 +38,7 @@ public class Vuelo {
     @Column(name = "fecha_vuelo")
     private Date fechaVuelo;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_horario")
     private Horario horario;
 
