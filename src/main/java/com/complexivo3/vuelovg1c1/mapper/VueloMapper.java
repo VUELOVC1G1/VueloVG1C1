@@ -20,7 +20,7 @@ public class VueloMapper {
         vuelo.setObservacion(vueloRequest.getObservacion());
         //otras entitys
 
-        if (Objects.nonNull(vuelo.getUsuarioCharter()))
+        if (Objects.nonNull(vueloRequest.getUCharterResponse()))
             vuelo.setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
         vuelo.setRuta(RutaMapper.toRuta(vueloRequest.getRutaRequest()));
         vuelo.setHorario(HorarioMapper.toHorario(vueloRequest.getHorarioRequest()));
