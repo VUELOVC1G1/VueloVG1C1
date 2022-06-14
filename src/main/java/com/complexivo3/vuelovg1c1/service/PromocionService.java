@@ -4,6 +4,7 @@ import com.complexivo3.vuelovg1c1.dto.PromocionVueloComercialResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionVueloResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionRequest;
 import com.complexivo3.vuelovg1c1.dto.PromocionResponse;
+import com.complexivo3.vuelovg1c1.exception.BadRequestException;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.PromocionMapper;
 import com.complexivo3.vuelovg1c1.model.Promocion;
@@ -40,6 +41,9 @@ public class PromocionService implements IPromocionService{
         Promocion p=PromocionMapper.topromocion(promocionRequest);
         Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
                 .orElseThrow(() -> new NotFoundException("No existe un veuelo con id: " + promocionRequest.getVueloid()));
+        if (vuelo.getPromociones().size() >= 1)
+            throw new BadRequestException("Este vuelo ya tiene una promoción asignada");
+
         p.setVuelo(vuelo);
         Promocion v= iPromocionRepository.save(p);
     }
@@ -60,6 +64,10 @@ public class PromocionService implements IPromocionService{
         if (ur.isPresent()) {
             Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
                     .orElseThrow(()-> new NotFoundException("No existe un vuelo con id: " + promocionRequest.getVueloid()));
+            
+            if (vuelo.getPromociones().size() >= 1)
+                throw new BadRequestException("Este vuelo ya tiene una promoción asignada");
+
             ur.get().setVuelo(vuelo);
             ur.get().setDescripcion(promocionRequest.getDescripcion());
             ur.get().setDescuento(promocionRequest.getDescuento());
