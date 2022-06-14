@@ -64,7 +64,7 @@ public class PromocionService implements IPromocionService{
         if (ur.isPresent()) {
             Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
                     .orElseThrow(()-> new NotFoundException("No existe un vuelo con id: " + promocionRequest.getVueloid()));
-            
+
             if (vuelo.getPromociones().size() >= 1)
                 throw new BadRequestException("Este vuelo ya tiene una promoción asignada");
 
