@@ -14,15 +14,12 @@ import lombok.RequiredArgsConstructor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -75,7 +72,8 @@ public class VueloService implements IVueloService{
             vuel.get().setHorario(HorarioMapper.toHorario(vueloRequest.getHorarioRequest()));
             vuel.get().setRuta(RutaMapper.toRuta(vueloRequest.getRutaRequest()));
             vuel.get().setTipo(TipoVueloMapper.toTipoVuelo(vueloRequest.getTipoVueloRequest()));
-            vuel.get().setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
+            if (Objects.nonNull(vueloRequest.getUCharterResponse()))
+                vuel.get().setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
             Avion avion=iAvionRepository.findById(vueloRequest.getAvionid())
                     .orElseThrow(() -> new NotFoundException("No existe un avion con id: " + vueloRequest.getAvionid()));
             vuel.get().setAvion(avion);
