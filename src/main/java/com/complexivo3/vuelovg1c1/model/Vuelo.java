@@ -61,4 +61,11 @@ public class Vuelo {
     @ManyToOne
     @JoinColumn(name = "id_avion")
     private Avion avion;
+
+    @OneToMany(
+            mappedBy = "vuelo",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Boleto> boletos;
 }

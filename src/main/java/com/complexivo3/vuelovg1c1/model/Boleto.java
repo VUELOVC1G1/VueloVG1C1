@@ -34,6 +34,10 @@ public class Boleto {
     private List<Asiento> asientos;
 
     @ManyToOne
+    @JoinColumn(name = "vuelo_id")
+    private Vuelo vuelo;
+
+    @ManyToOne
     @JoinColumn(name = "pasajero_id")
     private Pasajero pasajero;
 

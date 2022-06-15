@@ -14,4 +14,5 @@ public class BoletoDto {
     private List<MaletaDto> maletas;
     private List<AsientoDto> asientos;
     private PasajeroResponse pasajero;
+    private VueloResponse vuelo;
 }

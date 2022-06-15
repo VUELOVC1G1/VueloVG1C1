@@ -13,4 +13,5 @@ public class BoletoRequest {
     private List<MaletaRequest> maletas;
     private List<AsientoDto> asientos;
     private Long pasajeroId;
+    private Long vueloId;
 }

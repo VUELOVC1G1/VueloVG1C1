@@ -8,6 +8,7 @@ import com.complexivo3.vuelovg1c1.model.*;
 import com.complexivo3.vuelovg1c1.repository.IAsientoRepository;
 import com.complexivo3.vuelovg1c1.repository.IBoletoRepository;
 import com.complexivo3.vuelovg1c1.repository.IPasajeroRepository;
+import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class BoletoService {
     private final IBoletoRepository boletoRepository;
     private final IAsientoRepository asientoRepository;
     private final IPasajeroRepository pasajeroRepository;
+    private final IVueloRepository vueloRepository;
 
     @Transactional
     public void save(BoletoRequest request) {
@@ -42,10 +44,15 @@ public class BoletoService {
         Pasajero pasajero = pasajeroRepository.findById(request.getPasajeroId())
                 .orElseThrow(() -> new NotFoundException("No existe un pasajero con id: " + request.getPasajeroId()));
 
+        Vuelo vuelo = vueloRepository.findById(request.getVueloId())
+                .orElseThrow(() -> new NotFoundException("No existe un vuelo con id: " + request.getVueloId()));
+
         pago.setBoleto(boleto);
         maletas.forEach(m -> m.setBoleto(boleto));
         asientos.forEach(a -> a.getBoletos().add(boleto));
+        vuelo.getBoletos().add(boleto);
 
+        boleto.setVuelo(vuelo);
         boleto.setPagos(pago);
         boleto.setMaletas(maletas);
         boleto.setAsientos(asientos);
@@ -92,6 +99,8 @@ public class BoletoService {
         dto.setMaletas(boleto.getMaletas()
                 .stream().map(MaletaMapper::toDto)
                 .collect(Collectors.toList()));
+
+        dto.setVuelo(VueloMapper.toVueloResponse(boleto.getVuelo()));
 
         return dto;
     }
