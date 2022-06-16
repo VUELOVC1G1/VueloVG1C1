@@ -2,6 +2,7 @@ package com.complexivo3.vuelovg1c1.service;
 
 import java.util.List;
 
+import com.complexivo3.vuelovg1c1.dto.AsientoEstado;
 import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 
@@ -21,5 +22,5 @@ public interface IVueloService {
 
     List<VueloResponse> findAll();
 
-    boolean asientoDisponible(Long vueloId, Long asientoId);
+    AsientoEstado asientoDisponible(Long vueloId, Long asientoId);
 }

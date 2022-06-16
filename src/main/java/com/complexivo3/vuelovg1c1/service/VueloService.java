@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.AsientoEstado;
 import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
@@ -185,11 +186,11 @@ public class VueloService implements IVueloService {
 
     @Transactional(readOnly = true)
     @Override
-    public boolean asientoDisponible(Long vueloId, Long asientoId) {
+    public AsientoEstado asientoDisponible(Long vueloId, Long asientoId) {
         Vuelo vuelo = iVueloRepository.findById(vueloId)
                 .orElseThrow(() -> new NotFoundException("No existe un vuelo con id: " + vueloId));
 
-        if (!vuelo.isEstado()) return true;
+        if (!vuelo.isEstado()) return new AsientoEstado(true);
 
         Asiento asiento = asientoRepository.findById(asientoId)
                 .orElseThrow(() -> new NotFoundException("No existe un asiento con id: " + asientoId));
@@ -198,6 +199,6 @@ public class VueloService implements IVueloService {
                 .stream().filter(a -> a.getAsientos().contains(asiento))
                 .findFirst();
 
-        return !boletoReservado.isPresent();
+        return new AsientoEstado(!boletoReservado.isPresent());
     }
 }
