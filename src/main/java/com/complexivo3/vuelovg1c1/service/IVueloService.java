@@ -22,5 +22,5 @@ public interface IVueloService {
 
     List<VueloResponse> findAll();
 
-    AsientoEstado asientoDisponible(Long vueloId, Long asientoId);
+    boolean asientoDisponible(Long vueloId, Long asientoId);
 }

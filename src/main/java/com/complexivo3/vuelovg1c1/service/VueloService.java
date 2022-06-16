@@ -186,11 +186,11 @@ public class VueloService implements IVueloService {
 
     @Transactional(readOnly = true)
     @Override
-    public AsientoEstado asientoDisponible(Long vueloId, Long asientoId) {
+    public boolean asientoDisponible(Long vueloId, Long asientoId) {
         Vuelo vuelo = iVueloRepository.findById(vueloId)
                 .orElseThrow(() -> new NotFoundException("No existe un vuelo con id: " + vueloId));
 
-        if (!vuelo.isEstado()) return new AsientoEstado(true);
+        if (!vuelo.isEstado()) return true;
 
         Asiento asiento = asientoRepository.findById(asientoId)
                 .orElseThrow(() -> new NotFoundException("No existe un asiento con id: " + asientoId));
@@ -199,6 +199,6 @@ public class VueloService implements IVueloService {
                 .stream().filter(a -> a.getAsientos().contains(asiento))
                 .findFirst();
 
-        return new AsientoEstado(!boletoReservado.isPresent());
+        return !boletoReservado.isPresent();
     }
 }
