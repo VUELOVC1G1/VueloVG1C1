@@ -37,4 +37,10 @@ public interface IVueloRepository extends JpaRepository<Vuelo,Long> {
         value = "Select * from vuelos inner join promociones on vuelos.id = promociones.id_vuelo where promociones.id = :idPromocion and vuelos.id_ruta = :idRuta and vuelos.estado = :estado", 
         nativeQuery = true)
     public List<Vuelo> getVuelosDisponiblesPromocionRuta(Long idPromocion, Long idRuta, boolean estado);
+
+
+    @Query(
+            value = "select * from vuelos v where extract(minute from v.fecha_vuelo) - extract(minute from current_time) = 2",
+            nativeQuery = true)
+    public List<Vuelo> getVuelos();
 }

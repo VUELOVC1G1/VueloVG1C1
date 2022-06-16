@@ -23,9 +23,10 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Long id;
-     private String correo;
-     private String password;
-     private String rol; // pasajero, charter, empleado.}
+    private Long id;
+    private String correo;
+    private String password;
+    private String rol; // pasajero, charter, empleado.}
+    private String androidToken;
 
 }
