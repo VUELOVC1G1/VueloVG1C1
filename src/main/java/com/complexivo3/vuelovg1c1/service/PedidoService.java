@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -70,4 +72,12 @@ public class PedidoService implements IPedidoService{
             throw new  NotFoundException("No existe un pedido con id: " + pedidoRequest.getId());
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<PedidoResponse> findAll() {
+        return iPedidoRepository.findAll()
+                .stream().map(PedidoMapper::topedidoResponse)
+                .collect(Collectors.toList());
+    }
+
 }

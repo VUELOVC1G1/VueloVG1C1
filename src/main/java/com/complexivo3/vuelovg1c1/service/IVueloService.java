@@ -20,4 +20,6 @@ public interface IVueloService {
     List<VueloResponse> getVuelosDisponiblesPromocionRuta(Long idPromocion, Long idRuta);
 
     List<VueloResponse> findAll();
+
+    boolean asientoDisponible(Long vueloId, Long asientoId);
 }

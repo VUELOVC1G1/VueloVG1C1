@@ -26,6 +26,11 @@ public class PedidoController {
         return ResponseEntity.ok(iPedidoService.findByPedidoId(id));
     }
 
+    @GetMapping("/pedidos")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(iPedidoService.findAll());
+    }
+
     @DeleteMapping("/pedidos/{id}")
     public ResponseEntity<?> deletepedidobyId(@PathVariable Long id){
 

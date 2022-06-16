@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios_charter")
 public class UsuarioCharter {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +26,7 @@ public class UsuarioCharter {
     private String empresa;
 
 
-   @OneToOne(
+    @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true
@@ -34,12 +34,18 @@ public class UsuarioCharter {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "usuarioCharter", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuarioCharter",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private  List<Manifiesto> manifiestos;
+    private List<Manifiesto> manifiestos;
 
-    @OneToOne(mappedBy = "usuarioCharter", orphanRemoval = true)
-    private Pedido pedido;
+    @OneToMany(mappedBy = "usuarioCharter",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Pedido> pedido = new java.util.ArrayList<>();
 
     @OneToMany(mappedBy = "usuarioCharter")
     private List<Vuelo> vuelos;

@@ -28,8 +28,7 @@ public class Pedido {
     @Temporal(TemporalType.DATE)
     private Date fecha;
 
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_cliente_charter")
     private UsuarioCharter usuarioCharter;
 }

@@ -39,6 +39,11 @@ public class VueloController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{vueloId}/asientos/{asientoId}/estado")
+    public ResponseEntity<?> asientoDisponible(@PathVariable Long vueloId, @PathVariable Long asientoId) {
+        return ResponseEntity.ok(iVueloService.asientoDisponible(vueloId, asientoId));
+    }
+
 
     @GetMapping
     public ResponseEntity<?> findAll() {
