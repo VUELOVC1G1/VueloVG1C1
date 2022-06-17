@@ -30,6 +30,7 @@ public class BoletoService {
     private final IPasajeroRepository pasajeroRepository;
     private final IVueloRepository vueloRepository;
 
+    private final EmailService emailService;
     private final PushNotificationService notificationService;
 
     @Transactional
@@ -66,20 +67,28 @@ public class BoletoService {
         boleto.setPasajero(pasajero);
         boletoRepository.save(boleto);
 
-        sendNotification(pasajero, request.getFecha(), vuelo.getRuta().getDestino());
+        String fechaReserva = request.getFecha().toInstant().atOffset(ZoneOffset.UTC)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String destino = vuelo.getRuta().getDestino();
+
+        sendNotification(pasajero, fechaReserva, destino);
+        sendEmail(pasajero.getUsuario().getCorreo(), fechaReserva, destino);
     }
 
-    private void sendNotification(Pasajero pasajero, Date date, String destino) {
+    private void sendNotification(Pasajero pasajero, String date, String destino) {
         if (!pasajero.getUsuario().getAndroidToken().isEmpty()) {
-            String fechaReserva = date.toInstant().atOffset(ZoneOffset.UTC)
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
 
             PushNotificationRequest request = new PushNotificationRequest();
             request.setTitle("¡Has reservado un vuelo!");
-            request.setMessage("Tu vuelo a " + destino + ", esta reservado para el dia: " + fechaReserva);
+            request.setMessage("Tu vuelo a " + destino + ", esta reservado para el dia: " + date);
             request.setToken(pasajero.getUsuario().getAndroidToken());
             notificationService.sendPushNotificationToToken(request);
         }
+    }
+
+    private void sendEmail(String email, String date, String destino) {
+        emailService.enviarEmail(email, "¡Has reservado un vuelo!", "Tu vuelo a " + destino + ", esta reservado para el dia: " + date);
     }
 
     @Transactional(readOnly = true)

@@ -3,6 +3,7 @@ package com.complexivo3.vuelovg1c1.notifications.service;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
 import com.complexivo3.vuelovg1c1.notifications.dto.PushNotificationRequest;
 import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
+import com.complexivo3.vuelovg1c1.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class NotificationService {
 
     private final IVueloRepository vueloRepository;
     private final PushNotificationService notificationService;
+    private final EmailService emailService;
 
     @Transactional(readOnly = true)
     @Scheduled(cron = "0 */1 * * * *")
@@ -29,11 +31,17 @@ public class NotificationService {
             reserva.getBoletos()
                     .forEach(b -> {
                         if (!b.getPasajero().getUsuario().getAndroidToken().isEmpty()) {
+                            String title = "¡Tu vuelo a " + reserva.getRuta().getDestino() + ", sale en dos horas!";
+                            String message = "Recuerda llegar a tiempo, no olvides tus documentos";
+
                             PushNotificationRequest request = new PushNotificationRequest();
-                            request.setTitle("¡Tu vuelo a " + reserva.getRuta().getDestino() + ", sale en dos horas!");
-                            request.setMessage("Recuerda llegar a tiempo, no olvides tus documentos");
+                            request.setTitle(title);
+                            request.setMessage(message);
                             request.setToken(b.getPasajero().getUsuario().getAndroidToken());
                             notificationService.sendPushNotificationToToken(request);
+
+                            emailService.enviarEmail(b.getPasajero().getUsuario().getCorreo(), title, message);
+
                         }
                     });
         }
