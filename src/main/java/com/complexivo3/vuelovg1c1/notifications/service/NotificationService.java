@@ -28,11 +28,13 @@ public class NotificationService {
 
             reserva.getBoletos()
                     .forEach(b -> {
-                        PushNotificationRequest request = new PushNotificationRequest();
-                        request.setTitle("¡Tu vuelo sale en dos horas!");
-                        request.setMessage("DESCRIPCION: " + reserva.getObservacion());
-                        request.setToken(b.getPasajero().getUsuario().getAndroidToken());
-                        notificationService.sendPushNotificationToToken(request);
+                        if (!b.getPasajero().getUsuario().getAndroidToken().isEmpty()) {
+                            PushNotificationRequest request = new PushNotificationRequest();
+                            request.setTitle("¡Tu vuelo a " + reserva.getRuta().getDestino() + ", sale en dos horas!");
+                            request.setMessage("Recuerda llegar a tiempo, no olvides tus documentos");
+                            request.setToken(b.getPasajero().getUsuario().getAndroidToken());
+                            notificationService.sendPushNotificationToToken(request);
+                        }
                     });
         }
     }

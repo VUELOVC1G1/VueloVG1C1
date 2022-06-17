@@ -34,7 +34,6 @@ public class Vuelo {
 
     private boolean estado;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_vuelo")
     private Date fechaVuelo;
 

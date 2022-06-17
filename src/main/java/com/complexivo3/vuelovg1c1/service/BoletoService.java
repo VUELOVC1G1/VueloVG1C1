@@ -5,6 +5,8 @@ import com.complexivo3.vuelovg1c1.dto.BoletoRequest;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.*;
 import com.complexivo3.vuelovg1c1.model.*;
+import com.complexivo3.vuelovg1c1.notifications.dto.PushNotificationRequest;
+import com.complexivo3.vuelovg1c1.notifications.service.PushNotificationService;
 import com.complexivo3.vuelovg1c1.repository.IAsientoRepository;
 import com.complexivo3.vuelovg1c1.repository.IBoletoRepository;
 import com.complexivo3.vuelovg1c1.repository.IPasajeroRepository;
@@ -13,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +29,8 @@ public class BoletoService {
     private final IAsientoRepository asientoRepository;
     private final IPasajeroRepository pasajeroRepository;
     private final IVueloRepository vueloRepository;
+
+    private final PushNotificationService notificationService;
 
     @Transactional
     public void save(BoletoRequest request) {
@@ -58,6 +65,21 @@ public class BoletoService {
         boleto.setAsientos(asientos);
         boleto.setPasajero(pasajero);
         boletoRepository.save(boleto);
+
+        sendNotification(pasajero, request.getFecha(), vuelo.getRuta().getDestino());
+    }
+
+    private void sendNotification(Pasajero pasajero, Date date, String destino) {
+        if (!pasajero.getUsuario().getAndroidToken().isEmpty()) {
+            String fechaReserva = date.toInstant().atOffset(ZoneOffset.UTC)
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+            PushNotificationRequest request = new PushNotificationRequest();
+            request.setTitle("¡Has reservado un vuelo!");
+            request.setMessage("Tu vuelo a " + destino + ", esta reservado para el dia: " + fechaReserva);
+            request.setToken(pasajero.getUsuario().getAndroidToken());
+            notificationService.sendPushNotificationToToken(request);
+        }
     }
 
     @Transactional(readOnly = true)

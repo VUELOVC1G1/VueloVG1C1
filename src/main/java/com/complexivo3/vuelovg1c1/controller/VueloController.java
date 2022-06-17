@@ -39,6 +39,10 @@ public class VueloController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/pasajero/{id}")
+    public ResponseEntity<?> vuelosDiario(@PathVariable Long id) {
+        return ResponseEntity.ok(iVueloService.vuelosHoyPasajero(id));
+    }
 
     @GetMapping
     public ResponseEntity<?> findAll() {

@@ -5,9 +5,11 @@ import com.complexivo3.vuelovg1c1.model.Pasajero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface IBoletoRepository extends JpaRepository<Boleto, Long> {
     List<Boleto> findAllByPasajero(Pasajero pasajero);
+    List<Boleto> findAllByPasajeroAndFecha(Pasajero pasajero, Date fecha);
 }

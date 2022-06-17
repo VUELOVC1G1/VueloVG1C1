@@ -2,6 +2,7 @@ package com.complexivo3.vuelovg1c1.service;
 
 import java.util.List;
 
+import com.complexivo3.vuelovg1c1.dto.VueloHoy;
 import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 
@@ -20,4 +21,6 @@ public interface IVueloService {
     List<VueloResponse> getVuelosDisponiblesPromocionRuta(Long idPromocion, Long idRuta);
 
     List<VueloResponse> findAll();
+
+    List<VueloHoy> vuelosHoyPasajero(Long id);
 }
