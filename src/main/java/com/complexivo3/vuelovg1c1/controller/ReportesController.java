@@ -34,4 +34,9 @@ public class ReportesController {
     public ResponseEntity<List<IVuelosGroupByDay>> vuelosDiariosC() {
         return ResponseEntity.ok(reportesService.getVuelosDiariosC());
     }
+
+    @GetMapping("/facturas")
+    public ResponseEntity<?> facturasPorMes() {
+        return ResponseEntity.ok(reportesService.getFacturasMensuales());
+    }
 }

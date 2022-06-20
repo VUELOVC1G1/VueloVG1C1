@@ -7,22 +7,30 @@ import lombok.Setter;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name="pagos")
+@Table(name = "pagos")
 public class Pago {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double valor_pago ;
+    private double valor_pago;
     private Boolean estado_pago;
     private String tipo;
+    private Date fecha;
 
     @OneToOne
     @JoinColumn(name = "id_boleto")
     private Boleto boleto;
+
+    @PrePersist
+    private void initFecha() {
+        fecha = new Date();
+    }
 }

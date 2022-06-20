@@ -1,7 +1,10 @@
 package com.complexivo3.vuelovg1c1.service;
 
+import com.complexivo3.vuelovg1c1.dto.FacturaMes;
 import com.complexivo3.vuelovg1c1.dto.VuelosDiarios;
 import com.complexivo3.vuelovg1c1.model.IVuelosGroupByDay;
+import com.complexivo3.vuelovg1c1.model.Vuelo;
+import com.complexivo3.vuelovg1c1.repository.IBoletoRepository;
 import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,12 +14,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class ReportesService {
 
     private final IVueloRepository vueloRepository;
+    private final IBoletoRepository boletoRepository;
 
     @Transactional(readOnly = true)
     public VuelosDiarios getVuelosDiariosA() {
@@ -46,4 +51,14 @@ public class ReportesService {
         return vueloRepository.findAllGroupByFechaVuelo();
     }
 
+    public List<?> getFacturasMensuales() {
+        return boletoRepository.findAllGroupByMonth()
+                .stream().map(p -> {
+                    FacturaMes f = new FacturaMes();
+                    f.setFecha(p.getMes().concat("-01"));
+                    f.setTotal(p.getTotal());
+                    return f;
+                })
+                .collect(Collectors.toList());
+    }
 }
