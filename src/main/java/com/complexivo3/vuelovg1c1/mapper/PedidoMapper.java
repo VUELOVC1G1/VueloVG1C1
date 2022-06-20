@@ -24,7 +24,7 @@ public class PedidoMapper {
         pedidoResponse.setEstado(pedido.isEstado());
         pedidoResponse.setFecha(pedido.getFecha());
         pedidoResponse.setRuta(pedido.getRuta());
-
+        pedidoResponse.setCharterId(pedido.getUsuarioCharter().getId());
         return pedidoResponse;
     }
 }

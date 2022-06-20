@@ -12,6 +12,7 @@ public class VueloComercialResponse {
     private String observacion;
     private Date fechaVuelo;
     private boolean estado;
+    private String salaEspera;
     private HorarioResponse horarioResponse;
     private RutaResponse rutaResponse;
     private TipoVueloResponse tipoVueloResponse;

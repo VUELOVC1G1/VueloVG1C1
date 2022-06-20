@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.repository;
 
+import com.complexivo3.vuelovg1c1.model.IVuelosGroupByDay;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
 
 import java.util.Date;
@@ -37,4 +38,12 @@ public interface IVueloRepository extends JpaRepository<Vuelo,Long> {
         value = "Select * from vuelos inner join promociones on vuelos.id = promociones.id_vuelo where promociones.id = :idPromocion and vuelos.id_ruta = :idRuta and vuelos.estado = :estado", 
         nativeQuery = true)
     public List<Vuelo> getVuelosDisponiblesPromocionRuta(Long idPromocion, Long idRuta, boolean estado);
+
+
+    @Query(
+            value = "SELECT v.fechaVuelo AS fecha, COUNT(v.id) AS numVuelos " +
+                    "FROM Vuelo AS v " +
+                    "GROUP BY v.fechaVuelo"
+    )
+    List<IVuelosGroupByDay> findAllGroupByFechaVuelo();
 }

@@ -72,17 +72,20 @@ public class VueloService implements IVueloService {
             vuel.get().setFechaVuelo(new Date(vueloRequest.getFechaVuelo().getTime() + (1000 * 60 * 60 * 24)));
             vuel.get().setObservacion(vueloRequest.getObservacion());
             vuel.get().setPrecio(vueloRequest.getPrecio());
+            vuel.get().setSalaEspera(vueloRequest.getSalaEspera());
             vuel.get().setHorario(HorarioMapper.toHorario(vueloRequest.getHorarioRequest()));
             vuel.get().setRuta(RutaMapper.toRuta(vueloRequest.getRutaRequest()));
             vuel.get().setTipo(TipoVueloMapper.toTipoVuelo(vueloRequest.getTipoVueloRequest()));
+
             if (Objects.nonNull(vueloRequest.getUCharterResponse()))
                 vuel.get().setUsuarioCharter(UCharterMapper.toUCharter2(vueloRequest.getUCharterResponse()));
+
             Avion avion = iAvionRepository.findById(vueloRequest.getAvionid())
                     .orElseThrow(() -> new NotFoundException("No existe un avion con id: " + vueloRequest.getAvionid()));
             vuel.get().setAvion(avion);
 
             try {
-                Vuelo vuelo = iVueloRepository.save(vuel.get());
+                iVueloRepository.save(vuel.get());
                 return true;
             } catch (Exception ex) {
                 throw new NotFoundException("No existe un vuelo id: " + vueloRequest.getId());

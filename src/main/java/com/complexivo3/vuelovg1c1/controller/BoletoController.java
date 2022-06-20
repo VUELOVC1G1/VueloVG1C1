@@ -1,11 +1,14 @@
 package com.complexivo3.vuelovg1c1.controller;
 
+import com.complexivo3.vuelovg1c1.dto.BoletoDto;
 import com.complexivo3.vuelovg1c1.dto.BoletoRequest;
 import com.complexivo3.vuelovg1c1.service.BoletoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +31,11 @@ public class BoletoController {
     @GetMapping("/pasajero/{id}")
     public ResponseEntity<?> findByPasajero(@PathVariable Long id) {
         return ResponseEntity.ok(boletoService.findByPasajeroId(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BoletoDto>> getAll() {
+        return ResponseEntity.ok(boletoService.findAll());
     }
 
     @DeleteMapping("/{id}")

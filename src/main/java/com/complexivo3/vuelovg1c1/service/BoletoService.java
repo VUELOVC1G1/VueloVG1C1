@@ -105,4 +105,10 @@ public class BoletoService {
         return dto;
     }
 
+    @Transactional(readOnly = true)
+    public List<BoletoDto> findAll() {
+        return boletoRepository.findAll()
+                .stream().map(this::toBoletoDto)
+                .collect(Collectors.toList());
+    }
 }

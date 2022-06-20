@@ -34,6 +34,9 @@ public class Vuelo {
 
     private boolean estado;
 
+    @Column(name = "sala_espera")
+    private String salaEspera;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_vuelo")
     private Date fechaVuelo;
@@ -68,4 +71,9 @@ public class Vuelo {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Boleto> boletos;
+
+    @PostLoad
+    private void checkFechaVuelo() {
+        if (this.fechaVuelo.before(new Date())) setEstado(false);
+    }
 }

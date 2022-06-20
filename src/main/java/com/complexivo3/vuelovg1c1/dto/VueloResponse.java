@@ -12,6 +12,7 @@ public class VueloResponse {
     private String observacion;
     private Date fechaVuelo;
     private boolean estado;
+    private String salaEspera;
     private HorarioResponse horarioResponse;
     private UCharterResponse uCharterResponse;
     private RutaResponse rutaResponse;

@@ -9,4 +9,5 @@ public class PedidoResponse {
     private boolean estado;
     private String ruta;
     private Date fecha;
+    private Long charterId;
 }

@@ -18,6 +18,7 @@ public class VueloMapper {
         vuelo.setFechaVuelo(new Date(vueloRequest.getFechaVuelo().getTime()+(1000 * 60 * 60 * 24)));
         vuelo.setEstado(vueloRequest.isEstado());
         vuelo.setObservacion(vueloRequest.getObservacion());
+        vuelo.setSalaEspera(vueloRequest.getSalaEspera());
         //otras entitys
 
         if (Objects.nonNull(vueloRequest.getUCharterResponse()))
@@ -36,6 +37,7 @@ public class VueloMapper {
         vueloResponse.setFechaVuelo(vuelo.getFechaVuelo());
         vueloResponse.setEstado(vuelo.isEstado());
         vueloResponse.setObservacion(vuelo.getObservacion());
+        vueloResponse.setSalaEspera(vuelo.getSalaEspera());
         //otras entitys
         if (Objects.nonNull(vuelo.getUsuarioCharter()))
             vueloResponse.setUCharterResponse(UCharterMapper.toResponse(vuelo.getUsuarioCharter()));//revisar
@@ -53,6 +55,7 @@ public class VueloMapper {
         vueloResponse.setFechaCreacion(vuelo.getFechaCreacion());
         vueloResponse.setFechaVuelo(vuelo.getFechaVuelo());
         vueloResponse.setEstado(vuelo.isEstado());
+        vueloResponse.setSalaEspera(vuelo.getSalaEspera());
         vueloResponse.setObservacion(vuelo.getObservacion());
         //otras entitys
         vueloResponse.setRutaResponse(RutaMapper.toRutaResponse(vuelo.getRuta()));
