@@ -1,5 +1,6 @@
 package com.complexivo3.vuelovg1c1.controller;
 
+import com.complexivo3.vuelovg1c1.dto.VueloMensual;
 import com.complexivo3.vuelovg1c1.dto.VuelosDiarios;
 import com.complexivo3.vuelovg1c1.model.IVuelosGroupByDay;
 import com.complexivo3.vuelovg1c1.service.ReportesService;
@@ -33,6 +34,11 @@ public class ReportesController {
     @GetMapping("/vuelos/dia/c")
     public ResponseEntity<List<IVuelosGroupByDay>> vuelosDiariosC() {
         return ResponseEntity.ok(reportesService.getVuelosDiariosC());
+    }
+
+    @GetMapping("/vuelos/mes")
+    public ResponseEntity<List<VueloMensual>> vuelosMensuales() {
+        return ResponseEntity.ok(reportesService.getVuelosMensuales());
     }
 
     @GetMapping("/facturas")

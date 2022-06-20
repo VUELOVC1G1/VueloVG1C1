@@ -1,9 +1,9 @@
 package com.complexivo3.vuelovg1c1.service;
 
 import com.complexivo3.vuelovg1c1.dto.FacturaMes;
+import com.complexivo3.vuelovg1c1.dto.VueloMensual;
 import com.complexivo3.vuelovg1c1.dto.VuelosDiarios;
 import com.complexivo3.vuelovg1c1.model.IVuelosGroupByDay;
-import com.complexivo3.vuelovg1c1.model.Vuelo;
 import com.complexivo3.vuelovg1c1.repository.IBoletoRepository;
 import com.complexivo3.vuelovg1c1.repository.IVueloRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +51,7 @@ public class ReportesService {
         return vueloRepository.findAllGroupByFechaVuelo();
     }
 
+    @Transactional(readOnly = true)
     public List<?> getFacturasMensuales() {
         return boletoRepository.findAllGroupByMonth()
                 .stream().map(p -> {
@@ -58,6 +59,18 @@ public class ReportesService {
                     f.setFecha(p.getMes().concat("-01"));
                     f.setTotal(p.getTotal());
                     return f;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<VueloMensual> getVuelosMensuales() {
+        return vueloRepository.findAllGroupByFechaVueloMensual()
+                .stream().map(v -> {
+                    VueloMensual m = new VueloMensual();
+                    m.setNumVuelos(v.getNumVuelos());
+                    m.setFecha(v.getFecha().concat("-01"));
+                    return m;
                 })
                 .collect(Collectors.toList());
     }
