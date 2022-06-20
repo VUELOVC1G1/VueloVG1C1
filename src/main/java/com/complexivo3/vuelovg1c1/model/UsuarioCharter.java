@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -38,8 +39,8 @@ public class UsuarioCharter {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Manifiesto> manifiestos;
+    //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Manifiesto> manifiestos = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuarioCharter",
             fetch = FetchType.LAZY,

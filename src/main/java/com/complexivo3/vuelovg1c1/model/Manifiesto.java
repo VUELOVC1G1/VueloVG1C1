@@ -29,6 +29,6 @@ public class Manifiesto {
 
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario_charter", nullable = false)
+    @JoinColumn(name = "id_usuario_charter")
     private UsuarioCharter usuarioCharter;
 }
