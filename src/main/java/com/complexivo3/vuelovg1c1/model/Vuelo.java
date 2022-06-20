@@ -37,7 +37,6 @@ public class Vuelo {
     @Column(name = "sala_espera")
     private String salaEspera;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_vuelo")
     private Date fechaVuelo;
 
