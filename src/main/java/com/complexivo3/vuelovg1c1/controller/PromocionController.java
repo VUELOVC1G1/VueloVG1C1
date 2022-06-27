@@ -26,6 +26,11 @@ public class PromocionController {
         return ResponseEntity.ok(iPromocionService.findByPromocionId(id));
     }
 
+    @GetMapping("/promociones/vuelo/{id}")
+    public ResponseEntity<?> findPromocionesByVueloId(@PathVariable Long id) {
+        return ResponseEntity.ok(iPromocionService.findVueloPromociones(id));
+    }
+
     @GetMapping("/promociones")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(iPromocionService.findAll());

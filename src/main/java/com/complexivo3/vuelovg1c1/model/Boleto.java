@@ -21,6 +21,7 @@ public class Boleto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     private String qr;
 
@@ -30,7 +31,7 @@ public class Boleto {
     @OneToMany(mappedBy = "boleto", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Maleta> maletas;
 
-    @ManyToMany(mappedBy = "boletos")
+    @ManyToMany(mappedBy = "boletos", fetch = FetchType.LAZY)
     private List<Asiento> asientos;
 
     @ManyToOne

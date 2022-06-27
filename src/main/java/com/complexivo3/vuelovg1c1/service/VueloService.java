@@ -1,25 +1,19 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import com.complexivo3.vuelovg1c1.dto.AsientoEstado;
+import com.complexivo3.vuelovg1c1.dto.VueloHoy;
 import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.*;
-import com.complexivo3.vuelovg1c1.model.Asiento;
-import com.complexivo3.vuelovg1c1.model.Avion;
-import com.complexivo3.vuelovg1c1.model.Boleto;
-import com.complexivo3.vuelovg1c1.model.Vuelo;
+import com.complexivo3.vuelovg1c1.model.*;
 import com.complexivo3.vuelovg1c1.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -31,6 +25,9 @@ public class VueloService implements IVueloService {
     private final IPromocionRepository promocionRepository;
     private final IAvionRepository iAvionRepository;
     private final IAsientoRepository asientoRepository;
+    private final IBoletoRepository boletoRepository;
+
+    private final IPasajeroRepository pasajeroRepository;
 
 
     @Transactional(readOnly = true)
@@ -203,5 +200,21 @@ public class VueloService implements IVueloService {
                 .findFirst();
 
         return !boletoReservado.isPresent();
+    }
+
+    public List<VueloHoy> vuelosHoyPasajero(Long id) {
+        Pasajero pasajero = pasajeroRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No existe el pasajero con id: " + id));
+
+        List<Boleto> boletos = boletoRepository.findAllByPasajeroAndFechaLessThanEqual(pasajero, new Date());
+
+        return boletos
+                .stream().map(b -> {
+                    VueloHoy hoy = new VueloHoy();
+                    hoy.setVueloId(b.getVuelo().getId());
+                    hoy.setDestino(b.getVuelo().getRuta().getDestino());
+                    hoy.setFecha(b.getVuelo().getFechaVuelo());
+                    return hoy;
+                }).collect(Collectors.toList());
     }
 }

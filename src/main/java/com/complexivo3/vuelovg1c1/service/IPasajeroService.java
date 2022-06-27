@@ -1,9 +1,9 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import java.util.List;
-
 import com.complexivo3.vuelovg1c1.dto.PasajeroRequest;
 import com.complexivo3.vuelovg1c1.dto.PasajeroResponse;
+
+import java.util.List;
 
 public interface IPasajeroService {
     PasajeroResponse findByUsuarioId(Long id);

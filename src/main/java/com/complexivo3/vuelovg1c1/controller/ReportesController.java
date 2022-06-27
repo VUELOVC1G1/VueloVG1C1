@@ -27,7 +27,7 @@ public class ReportesController {
     }
 
     @GetMapping("/vuelos/dia/b")
-    public ResponseEntity<Map<Date, Integer>> vuelosDiariosB() {
+    public ResponseEntity<Map<String, Integer>> vuelosDiariosB() {
         return ResponseEntity.ok(reportesService.getVuelosDiariosB());
     }
 

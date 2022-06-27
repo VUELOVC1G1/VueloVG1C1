@@ -1,6 +1,7 @@
 package com.complexivo3.vuelovg1c1.mapper;
 
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
+import com.complexivo3.vuelovg1c1.dto.AvionDtoAsientos;
 import com.complexivo3.vuelovg1c1.dto.AvionRequest;
 import com.complexivo3.vuelovg1c1.dto.AvionResponse;
 import com.complexivo3.vuelovg1c1.model.Avion;
@@ -55,6 +56,23 @@ public class AvionMapper {
                 .map(AsientoMapper::toDto)
                 .collect(Collectors.toList()));
 
+        return dto;
+    }
+
+    public static AvionDtoAsientos toDtoAsientos(Avion avion) {
+        AvionDtoAsientos dto = new AvionDtoAsientos(
+                avion.getId(),
+                avion.getPlaca(),
+                avion.getNombre(),
+                avion.getEstado(),
+                avion.getWifi(),
+                avion.getModelo(),
+                avion.getMarca()
+        );
+        dto.setAsientos(avion.getAsientos()
+                .stream()
+                .map(AsientoMapper::toDtoDisponible)
+                .collect(Collectors.toList()));
         return dto;
     }
 

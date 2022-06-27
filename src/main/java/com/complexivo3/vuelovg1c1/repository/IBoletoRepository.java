@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -17,4 +18,6 @@ public interface IBoletoRepository extends JpaRepository<Boleto, Long> {
             "FROM Pago as p " +
             "GROUP BY 1")
     List<IFacturaMes> findAllGroupByMonth();
+
+    List<Boleto> findAllByPasajeroAndFechaLessThanEqual(Pasajero pasajero, Date fecha);
 }

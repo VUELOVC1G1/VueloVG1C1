@@ -1,10 +1,10 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import java.util.List;
-
-import com.complexivo3.vuelovg1c1.dto.AsientoEstado;
+import com.complexivo3.vuelovg1c1.dto.VueloHoy;
 import com.complexivo3.vuelovg1c1.dto.VueloRequest;
 import com.complexivo3.vuelovg1c1.dto.VueloResponse;
+
+import java.util.List;
 
 public interface IVueloService {
     VueloResponse findByVueloId(Long id);
@@ -23,4 +23,5 @@ public interface IVueloService {
     List<VueloResponse> findAll();
 
     boolean asientoDisponible(Long vueloId, Long asientoId);
+    List<VueloHoy> vuelosHoyPasajero(Long id);
 }

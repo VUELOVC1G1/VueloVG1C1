@@ -1,14 +1,11 @@
 package com.complexivo3.vuelovg1c1.model;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class UsuarioCharter {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<Pedido> pedido = new java.util.ArrayList<>();
+    private List<Pedido> pedido = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuarioCharter")
     private List<Vuelo> vuelos;

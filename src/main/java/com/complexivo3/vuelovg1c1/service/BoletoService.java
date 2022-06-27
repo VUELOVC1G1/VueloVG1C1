@@ -5,6 +5,8 @@ import com.complexivo3.vuelovg1c1.dto.BoletoRequest;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.*;
 import com.complexivo3.vuelovg1c1.model.*;
+import com.complexivo3.vuelovg1c1.notifications.dto.PushNotificationRequest;
+import com.complexivo3.vuelovg1c1.notifications.service.PushNotificationService;
 import com.complexivo3.vuelovg1c1.repository.IAsientoRepository;
 import com.complexivo3.vuelovg1c1.repository.IBoletoRepository;
 import com.complexivo3.vuelovg1c1.repository.IPasajeroRepository;
@@ -13,7 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,6 +29,9 @@ public class BoletoService {
     private final IAsientoRepository asientoRepository;
     private final IPasajeroRepository pasajeroRepository;
     private final IVueloRepository vueloRepository;
+
+    private final EmailService emailService;
+    private final PushNotificationService notificationService;
 
     @Transactional
     public void save(BoletoRequest request) {
@@ -58,6 +66,27 @@ public class BoletoService {
         boleto.setAsientos(asientos);
         boleto.setPasajero(pasajero);
         boletoRepository.save(boleto);
+
+        String fechaReserva = request.getFecha().toInstant().atOffset(ZoneOffset.UTC)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String destino = vuelo.getRuta().getDestino();
+
+        sendNotification(pasajero, fechaReserva, destino);
+        sendEmail(pasajero.getUsuario().getCorreo(), fechaReserva, destino);
+    }
+
+    private void sendNotification(Pasajero pasajero, String date, String destino) {
+        if (Objects.nonNull(pasajero.getUsuario().getAndroidToken())) {
+            PushNotificationRequest request = new PushNotificationRequest();
+            request.setTitle("¡Has reservado un vuelo!");
+            request.setMessage("Tu vuelo a " + destino + ", esta reservado para el dia: " + date);
+            request.setToken(pasajero.getUsuario().getAndroidToken());
+            notificationService.sendPushNotificationToToken(request);
+        }
+    }
+
+    private void sendEmail(String email, String date, String destino) {
+        emailService.enviarEmail(email, "¡Has reservado un vuelo!", "Tu vuelo a " + destino + ", esta reservado para el dia: " + date);
     }
 
     @Transactional(readOnly = true)
@@ -81,8 +110,15 @@ public class BoletoService {
 
     @Transactional
     public void deleteById(long id) {
-        if (boletoRepository.existsById(id))
-            boletoRepository.deleteById(id); //TODO: handle exceptions
+        Boleto boleto = boletoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No existe un boleto con id: " + id));
+        List<Asiento> asientos = boleto.getAsientos();
+        for (Asiento asiento : asientos) {
+            asiento.getBoletos().remove(boleto);
+        }
+
+        boletoRepository.save(boleto);
+        boletoRepository.deleteById(id);
     }
 
     private BoletoDto toBoletoDto(Boleto boleto) {

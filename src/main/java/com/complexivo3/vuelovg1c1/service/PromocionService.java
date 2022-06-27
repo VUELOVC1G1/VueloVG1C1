@@ -1,9 +1,9 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import com.complexivo3.vuelovg1c1.dto.PromocionVueloComercialResponse;
-import com.complexivo3.vuelovg1c1.dto.PromocionVueloResponse;
 import com.complexivo3.vuelovg1c1.dto.PromocionRequest;
 import com.complexivo3.vuelovg1c1.dto.PromocionResponse;
+import com.complexivo3.vuelovg1c1.dto.PromocionVueloComercialResponse;
+import com.complexivo3.vuelovg1c1.dto.PromocionVueloResponse;
 import com.complexivo3.vuelovg1c1.exception.BadRequestException;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.PromocionMapper;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class PromocionService implements IPromocionService{
+public class PromocionService implements IPromocionService {
 
     private final IPromocionRepository iPromocionRepository;
     private final IVueloRepository iVueloRepository;
@@ -30,7 +30,7 @@ public class PromocionService implements IPromocionService{
     @Transactional(readOnly = true)
     @Override
     public PromocionVueloResponse findByPromocionId(Long id) {
-        Promocion promocion= iPromocionRepository.findById(id)
+        Promocion promocion = iPromocionRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No existe una promocion con id: " + id));
         return PromocionMapper.topromocionresponse(promocion);
     }
@@ -38,20 +38,20 @@ public class PromocionService implements IPromocionService{
     @Transactional
     @Override
     public void guardarPromocion(PromocionRequest promocionRequest) {
-        Promocion p=PromocionMapper.topromocion(promocionRequest);
-        Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
+        Promocion p = PromocionMapper.topromocion(promocionRequest);
+        Vuelo vuelo = iVueloRepository.findById(promocionRequest.getVueloid())
                 .orElseThrow(() -> new NotFoundException("No existe un veuelo con id: " + promocionRequest.getVueloid()));
         if (vuelo.getPromociones().size() >= 1)
             throw new BadRequestException("Este vuelo ya tiene una promoción asignada");
 
         p.setVuelo(vuelo);
-        Promocion v= iPromocionRepository.save(p);
+        Promocion v = iPromocionRepository.save(p);
     }
 
     @Transactional
     @Override
     public PromocionResponse deltevyIdPromocion(Long id) {
-        Promocion p= iPromocionRepository.findById(id)
+        Promocion p = iPromocionRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No existe una promocion con  con id: " + id));
         iPromocionRepository.delete(p);
         return PromocionMapper.topromocionresponsedelete(p);
@@ -60,10 +60,10 @@ public class PromocionService implements IPromocionService{
     @Transactional
     @Override
     public Boolean updatePromocion(PromocionRequest promocionRequest) {
-        Optional<Promocion> ur=iPromocionRepository.findById(promocionRequest.getId());
+        Optional<Promocion> ur = iPromocionRepository.findById(promocionRequest.getId());
         if (ur.isPresent()) {
-            Vuelo vuelo= iVueloRepository.findById(promocionRequest.getVueloid())
-                    .orElseThrow(()-> new NotFoundException("No existe un vuelo con id: " + promocionRequest.getVueloid()));
+            Vuelo vuelo = iVueloRepository.findById(promocionRequest.getVueloid())
+                    .orElseThrow(() -> new NotFoundException("No existe un vuelo con id: " + promocionRequest.getVueloid()));
 
             ur.get().setVuelo(vuelo);
             ur.get().setDescripcion(promocionRequest.getDescripcion());
@@ -73,10 +73,10 @@ public class PromocionService implements IPromocionService{
                 Promocion promocion = iPromocionRepository.save(ur.get());
                 return true;
             } catch (Exception ex) {
-                throw new  NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
+                throw new NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
             }
-        }else{
-            throw new  NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
+        } else {
+            throw new NotFoundException("No existe una promocion con id: " + promocionRequest.getId());
         }
     }
 
@@ -109,6 +109,17 @@ public class PromocionService implements IPromocionService{
                 .collect(Collectors.toList());
         return comerciales
                 .stream().map(PromocionMapper::topromocionresponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PromocionResponse> findVueloPromociones(Long id) {
+        Vuelo vuelo = iVueloRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No existe un vuelo con id: " + id));
+        List<Promocion> promocions = iPromocionRepository.findAllByVuelo(vuelo);
+
+        return promocions.stream()
+                .map(PromocionMapper::topromocionresponsedelete)
                 .collect(Collectors.toList());
     }
 }

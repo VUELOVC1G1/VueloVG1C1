@@ -9,12 +9,11 @@ import com.complexivo3.vuelovg1c1.model.Usuario;
 import com.complexivo3.vuelovg1c1.repository.IPasajeroRepository;
 import com.complexivo3.vuelovg1c1.repository.IUsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service

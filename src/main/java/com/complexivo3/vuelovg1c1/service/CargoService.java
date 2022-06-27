@@ -1,7 +1,6 @@
 package com.complexivo3.vuelovg1c1.service;
 
 import com.complexivo3.vuelovg1c1.dto.CargoDto;
-import com.complexivo3.vuelovg1c1.dto.CargoRequest;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
 import com.complexivo3.vuelovg1c1.mapper.CargoMapper;
 import com.complexivo3.vuelovg1c1.model.Cargo;

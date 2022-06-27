@@ -1,6 +1,7 @@
 package com.complexivo3.vuelovg1c1.controller;
 
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
+import com.complexivo3.vuelovg1c1.dto.AvionDtoAsientos;
 import com.complexivo3.vuelovg1c1.dto.AvionRequest;
 import com.complexivo3.vuelovg1c1.service.AvionService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,17 @@ public class AvionController {
         return ResponseEntity.ok(avionService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AvionDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(avionService.findById(id));
+    }
+
+
+    @GetMapping("{id}/asientos/disponible")
+    public ResponseEntity<AvionDtoAsientos> getByIdAsientos(@PathVariable Long id) {
+        return ResponseEntity.ok(avionService.findByIdAsientosDisponibles(id));
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody AvionDto request) {
         avionService.save(request);
@@ -40,9 +52,9 @@ public class AvionController {
         return ResponseEntity.ok().build();
     }
 
-    /** ---------------------------------------- MÉTODOS PROPUESTOS PARA ESTE SERVICIO ---------------------------------------- 
+    /** ---------------------------------------- MÉTODOS PROPUESTOS PARA ESTE SERVICIO ----------------------------------------
      * @author Eduardo Mendieta
-    */
+     */
     //@PostMapping("/")
     public ResponseEntity<?> crearAvion(@RequestBody AvionRequest request) {
         return new ResponseEntity<>(avionService.crearAvion(request), HttpStatus.CREATED);

@@ -1,12 +1,11 @@
 package com.complexivo3.vuelovg1c1.repository;
 
-import java.util.List;
-
+import com.complexivo3.vuelovg1c1.model.Manifiesto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.complexivo3.vuelovg1c1.model.Manifiesto;
+import java.util.List;
 
 @Repository
 public interface IManifiestoRepository extends JpaRepository<Manifiesto, Long>{

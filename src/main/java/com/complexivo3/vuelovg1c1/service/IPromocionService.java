@@ -19,4 +19,6 @@ public interface IPromocionService {
     List<PromocionVueloComercialResponse> findAllComerciales();
 
     List<PromocionVueloResponse> findAllCharter();
+
+    List<PromocionResponse> findVueloPromociones(Long id);
 }

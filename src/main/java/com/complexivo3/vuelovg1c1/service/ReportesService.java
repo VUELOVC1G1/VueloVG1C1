@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +35,8 @@ public class ReportesService {
     }
 
     @Transactional(readOnly = true)
-    public Map<Date, Integer> getVuelosDiariosB() {
-        Map<Date, Integer> vuelos = new HashMap<>();
+    public Map<String, Integer> getVuelosDiariosB() {
+        Map<String, Integer> vuelos = new HashMap<>();
         vueloRepository
                 .findAllGroupByFechaVuelo()
                 .stream().forEach(v -> {

@@ -3,14 +3,13 @@ package com.complexivo3.vuelovg1c1.repository;
 import com.complexivo3.vuelovg1c1.dto.IVueloMensual;
 import com.complexivo3.vuelovg1c1.model.IVuelosGroupByDay;
 import com.complexivo3.vuelovg1c1.model.Vuelo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IVueloRepository extends JpaRepository<Vuelo,Long> {
@@ -42,9 +41,9 @@ public interface IVueloRepository extends JpaRepository<Vuelo,Long> {
 
 
     @Query(
-            value = "SELECT v.fechaVuelo AS fecha, COUNT(v.id) AS numVuelos " +
+            value = "SELECT substring (concat(v.fechaVuelo, '') , 0, 11) as fecha, COUNT(v.id) AS numVuelos " +
                     "FROM Vuelo AS v " +
-                    "GROUP BY v.fechaVuelo"
+                    "GROUP BY 1"
     )
     List<IVuelosGroupByDay> findAllGroupByFechaVuelo();
 
@@ -54,4 +53,8 @@ public interface IVueloRepository extends JpaRepository<Vuelo,Long> {
                     "GROUP BY 1"
     )
     List<IVueloMensual> findAllGroupByFechaVueloMensual();
+    @Query(
+            value = "select * from vuelos v where extract(minute from v.fecha_vuelo) - extract(minute from current_time) = 2",
+            nativeQuery = true)
+    public List<Vuelo> getVuelos();
 }

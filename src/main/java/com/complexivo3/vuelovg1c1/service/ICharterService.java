@@ -1,9 +1,9 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import java.util.List;
-
 import com.complexivo3.vuelovg1c1.dto.CharterRequest;
 import com.complexivo3.vuelovg1c1.dto.UCharterResponse;
+
+import java.util.List;
 
 
 public interface ICharterService {

@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/manifiestos")
 public class ManifiestoController {
-    
+
     private final IManifiestoService manifiestoService;
 
 
@@ -47,7 +47,7 @@ public class ManifiestoController {
 
     @PutMapping("/{idManifiesto}/{idCharter}")
     public ResponseEntity<?> modificarManifiesto(@RequestBody ManifiestoRequest manifiestoRequest, @PathVariable Long idManifiesto,
-            @PathVariable Long idCharter) {
+                                                 @PathVariable Long idCharter) {
         return new ResponseEntity<>(manifiestoService.modificarManifiesto(manifiestoRequest, idManifiesto, idCharter), HttpStatus.CREATED);
     }
 

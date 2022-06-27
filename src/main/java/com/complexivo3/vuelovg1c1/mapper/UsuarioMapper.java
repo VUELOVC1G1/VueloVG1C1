@@ -21,15 +21,6 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public static Usuario dtoToUsuario(UserDto dto) {
-        return new Usuario(
-                dto.getId(),
-                dto.getEmail(),
-                dto.getPassword(),
-                dto.getRol()
-        );
-    }
-
     public static UserDto userToResponse(Usuario usuario) {
         UserDto response = new UserDto();
         response.setId(usuario.getId());

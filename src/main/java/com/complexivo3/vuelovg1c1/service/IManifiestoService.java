@@ -1,9 +1,9 @@
 package com.complexivo3.vuelovg1c1.service;
 
-import java.util.List;
-
 import com.complexivo3.vuelovg1c1.dto.ManifiestoRequest;
 import com.complexivo3.vuelovg1c1.dto.ManifiestoResponse;
+
+import java.util.List;
 
 public interface IManifiestoService {
     List<ManifiestoResponse> getAllManifiestos();

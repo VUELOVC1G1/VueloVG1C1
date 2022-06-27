@@ -1,6 +1,7 @@
 package com.complexivo3.vuelovg1c1.service;
 
 import com.complexivo3.vuelovg1c1.dto.AvionDto;
+import com.complexivo3.vuelovg1c1.dto.AvionDtoAsientos;
 import com.complexivo3.vuelovg1c1.dto.AvionRequest;
 import com.complexivo3.vuelovg1c1.dto.AvionResponse;
 import com.complexivo3.vuelovg1c1.exception.NotFoundException;
@@ -24,6 +25,8 @@ public class AvionService implements IAvionService{
 
     private final IAvionRepository avionRepository;
     private final IAsientoRepository asientoRepository;
+
+    private final VueloService vueloService;
 
 
     @Transactional(readOnly = true)
@@ -95,5 +98,21 @@ public class AvionService implements IAvionService{
     public AvionResponse crearAvion(AvionRequest request) {
         Avion avion = AvionMapper.toAvion(request);
         return AvionMapper.toResponse(avionRepository.save(avion));
+    }
+
+    @Transactional(readOnly = true)
+    public AvionDto findById(Long id) {
+        Avion avion = avionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No existe un avion con id: " + id));
+        return AvionMapper.toDto(avion);
+    }
+
+    @Transactional(readOnly = true)
+    public AvionDtoAsientos findByIdAsientosDisponibles(Long id) {
+        Avion avion = avionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No existe un avion con id: " + id));
+        AvionDtoAsientos dto = AvionMapper.toDtoAsientos(avion);
+        dto.getAsientos().forEach(a -> a.setEstado(vueloService.asientoDisponible(id, a.getId())));
+        return dto;
     }
 }
